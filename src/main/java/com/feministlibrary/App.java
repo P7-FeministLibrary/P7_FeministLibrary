@@ -1,5 +1,7 @@
 package com.feministlibrary;
 
+import com.feministlibrary.config.DBManager;
+
 /**
  * Hello world!
  *
@@ -8,6 +10,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        DBManager.init();
+        DBManager.close();
     }
 }
