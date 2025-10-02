@@ -1,7 +1,5 @@
 package com.feministlibrary.model.author;
 
-import java.security.AuthProvider;
-
 public class Author {
     private int idAuthor;
     private String name;
