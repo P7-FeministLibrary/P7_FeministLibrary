@@ -1,0 +1,14 @@
+# Ignorar directorios de compilación de Maven
+/target/
+
+# Archivos de configuración del IDE
+*.iml
+.idea/
+.vscode/
+
+# Archivos temporales del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de log
+*.log
