@@ -2,9 +2,7 @@ package com.feministlibrary.model.book;
 
 import java.util.List;
 
-public class BookDaoInterface {
-
-    public interface BookDAOInterface {
+public interface BookDAOInterface {
 
         void insert(Book book);
         void update(Book book);
@@ -16,5 +14,3 @@ public class BookDaoInterface {
         List<Book> searchByAuthor(String authorName); 
         List<Book> searchByGenre(String genreName);
     }
-
-}
