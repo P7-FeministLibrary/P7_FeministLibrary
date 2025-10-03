@@ -10,7 +10,7 @@ public class AuthorDAOImplementation implements AuthorDAOInterface {
     @Override
     public void insert(Author author) {
         String sql = "INSERT INTO author (name, last_name) VALUES (?, ?)";
-        try (Connection conn = DBManager.init();
+        try (Connection conn = DBManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, author.getName());
@@ -26,7 +26,7 @@ public class AuthorDAOImplementation implements AuthorDAOInterface {
     @Override
     public void update(Author author) {
         String sql = "UPDATE author SET name=?, last_name=? WHERE id=?";
-        try (Connection conn = DBManager.init();
+        try (Connection conn = DBManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, author.getName());
@@ -43,7 +43,7 @@ public class AuthorDAOImplementation implements AuthorDAOInterface {
     @Override
     public void delete(int idAuthor) {
         String sql = "DELETE FROM author WHERE id=?";
-        try (Connection conn = DBManager.init();
+        try (Connection conn = DBManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, idAuthor);
@@ -58,7 +58,7 @@ public class AuthorDAOImplementation implements AuthorDAOInterface {
     @Override
     public Author getById(int idAuthor) {
         String sql = "SELECT * FROM author WHERE id=?";
-        try (Connection conn = DBManager.init();
+        try (Connection conn = DBManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, idAuthor);
@@ -79,7 +79,7 @@ public class AuthorDAOImplementation implements AuthorDAOInterface {
     public List<Author> getAll() {
         List<Author> authors = new ArrayList<>();
         String sql = "SELECT * FROM author";
-        try (Connection conn = DBManager.init();
+        try (Connection conn = DBManager.getConnection();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -99,7 +99,7 @@ public class AuthorDAOImplementation implements AuthorDAOInterface {
     public List<Author> searchByName(String name) {
         List<Author> authors = new ArrayList<>();
         String sql = "SELECT * FROM author WHERE name ILIKE ?";
-        try (Connection conn = DBManager.init();
+        try (Connection conn = DBManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, "%" + name + "%");
@@ -120,7 +120,7 @@ public class AuthorDAOImplementation implements AuthorDAOInterface {
     public List<Author> searchByLastName(String lastName) {
         List<Author> authors = new ArrayList<>();
         String sql = "SELECT * FROM author WHERE last_name ILIKE ?";
-        try (Connection conn = DBManager.init();
+        try (Connection conn = DBManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, "%" + lastName + "%");
