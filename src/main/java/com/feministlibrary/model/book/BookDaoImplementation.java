@@ -7,6 +7,7 @@ import java.util.List;
 
 public class BookDAOImplementation implements BookDAOInterface {
 
+
     @Override
     public void insert(Book book) {
         String sql = "INSERT INTO book (title, description, isbn) VALUES (?, ?, ?)";
