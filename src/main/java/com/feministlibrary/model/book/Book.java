@@ -6,12 +6,10 @@ public class Book {
     private String description;
     private String isbn;
 
-    public Book() {
+    public Book() {}
 
-    }
 
-    public Book(int idBook, String title, String description, String isbn) {
-        this.idBook = idBook;
+    public Book(String title, String description, String isbn) {
         this.title = title;
         this.description = description;
         this.isbn = isbn;
@@ -21,9 +19,9 @@ public class Book {
         return this.idBook;
     }
 
-    public void setIdBook(int idBook) {
-        this.idBook = idBook;
-    }
+    //public void setIdBook(int idBook) {
+        //this.idBook = idBook;
+    //
 
     public String getTitle() {
         return this.title;
@@ -49,9 +47,9 @@ public class Book {
         this.isbn = isbn;
     }
 
- @Override
- public String toString(){
-     return "[" + idBook + "] " + title + " (ISBN: " + isbn + ")";
- }
+    @Override
+    public String toString() {
+        return "[" + idBook + "] " + title + " (ISBN: " + isbn + ")";
+    }
 
 }
