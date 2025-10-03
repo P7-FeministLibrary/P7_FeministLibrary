@@ -23,12 +23,12 @@ public class DBManager {
             String password = dotenv.get("DB_PASSWORD");
 
             connection = DriverManager.getConnection(url, user, password);
-            System.out.println("Te has conectado exitosamente a la Biblioteca Feminista");
+            System.out.println("You have successfully connected to the Feminist Library");
         } catch (SQLException e) {
-            System.err.println("Error al intentar conectarse a la Biblioteca Feminista: " + e.getMessage());
+            System.err.println("Error when trying to connect to Feminist Library: " + e.getMessage());
             e.printStackTrace();
         } catch (Exception e) {
-            System.err.println("Error general: " + e.getMessage());
+            System.err.println("General Error: " + e.getMessage());
         }
     } else {
         System.out.println("Conexión ya establecida");
@@ -39,6 +39,7 @@ public class DBManager {
     public static void main(String[] args) {
         getConnection();
     }
+
     /*
     private static final String URL = "jdbc:postgresql://localhost:5432/feministlibrary";
     private static final String USER = "postgres";
@@ -58,7 +59,7 @@ public class DBManager {
     public static void close() {
         try {
             connection.close();
-            System.out.println("Desconxión exitosa");
+            System.out.println("Desconexión exitosa");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
