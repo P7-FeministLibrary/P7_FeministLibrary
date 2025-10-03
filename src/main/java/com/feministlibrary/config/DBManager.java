@@ -6,12 +6,14 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.SQLException;
 
 
+
 public class DBManager {
     private static Connection connection;
 
-    public static Connection getConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
-            Dotenv dotenv = Dotenv.load();
+    public static Connection getConnection() {
+        if (connection == null) {
+            try { 
+                Dotenv dotenv = Dotenv.load();
 
             String url = "jdbc:postgresql://"
                         + dotenv.get("DB_HOST") + ":"
@@ -21,8 +23,21 @@ public class DBManager {
             String password = dotenv.get("DB_PASSWORD");
 
             connection = DriverManager.getConnection(url, user, password);
+            System.out.println("Te has conectado exitosamente a la Biblioteca Feminista");
+        } catch (SQLException e) {
+            System.err.println("Error al intentar conectarse a la Biblioteca Feminista: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Error general: " + e.getMessage());
         }
+    } else {
+        System.out.println("Conexión ya establecida");
+    }
         return connection;
+    }
+
+    public static void main(String[] args) {
+        getConnection();
     }
     /*
     private static final String URL = "jdbc:postgresql://localhost:5432/feministlibrary";
