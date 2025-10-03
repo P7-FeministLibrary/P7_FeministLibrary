@@ -1,6 +1,10 @@
 package com.feministlibrary;
 
-//import com.feministlibrary.model.book.Book;
+import com.feministlibrary.config.DBManager;
+import com.feministlibrary.model.author.Author;
+import com.feministlibrary.model.author.AuthorDAOImplementation;
+import com.feministlibrary.model.author.AuthorDAOInterface;
+import com.feministlibrary.model.book.Book;
 import com.feministlibrary.model.book.BookDAOImplementation;
 import com.feministlibrary.model.book.BookDAOInterface;
 
@@ -12,13 +16,18 @@ public class App {
 
     public static void main(String[] args) {
         BookDAOInterface dao = new BookDAOImplementation();
-        dao.getAll().forEach(System.out::println);
+        //dao.getAll().forEach(System.out::println);
 
+        AuthorDAOInterface authorDao = new AuthorDAOImplementation();
+        //authorDao.getAll().forEach(System.out::println);           
+        
         // añadir libro
         
-        /* Book book = new Book("Feminism 3", "how to be a feminist", "234567832");
-         dao.insert(book); */
-         
+        Book book = new Book("We should all be feminists", "A book that questions long-held beliefs and gender stereotypes that perpetuate inequality between men and women.", "234567832");
+        dao.insert(book);
+        authorDao.insert(new Author("Chamamanda", "Ngozi Adichie"));
+
+                 
 
         /*
          * borrar libro 

@@ -1,147 +1,139 @@
-    package com.feministlibrary.model.author;
+package com.feministlibrary.model.author;
 
-    import com.feministlibrary.config.DBManager;
-    import java.sql.*;
-    import java.util.ArrayList;
-    import java.util.List;
+import com.feministlibrary.config.DBManager;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
-    public class AuthorDAOImplementation implements AuthorDAOInterface {
+public class AuthorDAOImplementation implements AuthorDAOInterface {
 
-        @Override
-        public void insert(Author author) {
-            String sql = "INSERT INTO author (name, last_name) VALUES (?, ?)";
-            try (Connection conn = DBManager.init();
+    @Override
+    public void insert(Author author) {
+        String sql = "INSERT INTO author (name, last_name) VALUES (?, ?)";
+        try (Connection conn = DBManager.init();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-                stmt.setString(1, author.getName());
-                stmt.setString(2, author.getLastName());
-                stmt.executeUpdate();
-                System.out.println("Author insertado con éxito");
+            stmt.setString(1, author.getName());
+            stmt.setString(2, author.getLastName());
+            stmt.executeUpdate();
+            System.out.println("Author insertado con éxito");
 
-            } catch (SQLException e) {
-                System.out.println("Error al insertar Author: " + e.getMessage());
-            }
+        } catch (SQLException e) {
+            System.out.println("Error al insertar Author: " + e.getMessage());
         }
+    }
 
-        @Override
-        public void update(Author author) {
-            String sql = "UPDATE author SET name=?, last_name=? WHERE id=?";
-            try (Connection conn = DBManager.init();
+    @Override
+    public void update(Author author) {
+        String sql = "UPDATE author SET name=?, last_name=? WHERE id=?";
+        try (Connection conn = DBManager.init();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-                stmt.setString(1, author.getName());
-                stmt.setString(2, author.getLastName());
-                stmt.setInt(3, author.getIdAuthor());
-                stmt.executeUpdate();
-                System.out.println("Author actualizado con éxito");
+            stmt.setString(1, author.getName());
+            stmt.setString(2, author.getLastName());
+            stmt.setInt(3, author.getIdAuthor());
+            stmt.executeUpdate();
+            System.out.println("Author actualizado con éxito");
 
-            } catch (SQLException e) {
-                System.out.println("Error al actualizar Author: " + e.getMessage());
-            }
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar Author: " + e.getMessage());
         }
+    }
 
-        @Override
-        public void delete(int idAuthor) {
-            String sql = "DELETE FROM author WHERE id=?";
-            try (Connection conn = DBManager.init();
+    @Override
+    public void delete(int idAuthor) {
+        String sql = "DELETE FROM author WHERE id=?";
+        try (Connection conn = DBManager.init();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-                stmt.setInt(1, idAuthor);
-                stmt.executeUpdate();
-                System.out.println("Author eliminado con éxito");
+            stmt.setInt(1, idAuthor);
+            stmt.executeUpdate();
+            System.out.println("Author eliminado con éxito");
 
-            } catch (SQLException e) {
-                System.out.println("Error eliminando Author: " + e.getMessage());
-            }
+        } catch (SQLException e) {
+            System.out.println("Error eliminando Author: " + e.getMessage());
         }
+    }
 
-        @Override
-        public Author getById(int idAuthor) {
-            String sql = "SELECT * FROM author WHERE id=?";
-            try (Connection conn = DBManager.init();
+    @Override
+    public Author getById(int idAuthor) {
+        String sql = "SELECT * FROM author WHERE id=?";
+        try (Connection conn = DBManager.init();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-                stmt.setInt(1, idAuthor);
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    return new Author(
-                            rs.getInt("id"),
-                            rs.getString("name"),
-                            rs.getString("last_name")
-                    );
-                }
-
-            } catch (SQLException e) {
-                System.out.println("Error buscando Author: " + e.getMessage());
+            stmt.setInt(1, idAuthor);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new Author(
+                        rs.getString("name"),
+                        rs.getString("last_name"));
             }
-            return null;
-        }
 
-        @Override
-        public List<Author> getAll() {
-            List<Author> authors = new ArrayList<>();
-            String sql = "SELECT * FROM author";
-            try (Connection conn = DBManager.init();
+        } catch (SQLException e) {
+            System.out.println("Error buscando Author: " + e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public List<Author> getAll() {
+        List<Author> authors = new ArrayList<>();
+        String sql = "SELECT * FROM author";
+        try (Connection conn = DBManager.init();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
 
-                while (rs.next()) {
-                    authors.add(new Author(
-                            rs.getInt("id"),
-                            rs.getString("name"),
-                            rs.getString("last_name")
-                    ));
-                }
-
-            } catch (SQLException e) {
-                System.out.println("Error al listar Authors: " + e.getMessage());
+            while (rs.next()) {
+                authors.add(new Author(
+                        rs.getString("name"),
+                        rs.getString("last_name")));
             }
-            return authors;
+
+        } catch (SQLException e) {
+            System.out.println("Error al listar Authors: " + e.getMessage());
         }
-
-        @Override
-        public List<Author> searchByName(String name) {
-            List<Author> authors = new ArrayList<>();
-            String sql = "SELECT * FROM author WHERE name ILIKE ?";
-            try (Connection conn = DBManager.init();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-                stmt.setString(1, "%" + name + "%");
-                ResultSet rs = stmt.executeQuery();
-                while (rs.next()) {
-                    authors.add(new Author(
-                            rs.getInt("id"),
-                            rs.getString("name"),
-                            rs.getString("last_name")
-                    ));
-                }
-
-            } catch (SQLException e) {
-                System.out.println("Error buscando Author por nombre: " + e.getMessage());
-            }
-            return authors;
-        }
-
-        @Override
-        public List<Author> searchByLastName(String lastName) {
-            List<Author> authors = new ArrayList<>();
-            String sql = "SELECT * FROM author WHERE last_name ILIKE ?";
-            try (Connection conn = DBManager.init();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-                stmt.setString(1, "%" + lastName + "%");
-                ResultSet rs = stmt.executeQuery();
-                while (rs.next()) {
-                    authors.add(new Author(
-                            rs.getInt("id"),
-                            rs.getString("name"),
-                            rs.getString("last_name")
-                    ));
-                }
-
-            } catch (SQLException e) {
-                System.out.println("Error buscando Author por apellido: " + e.getMessage());
-            }
-            return authors;
-        }
+        return authors;
     }
+
+    @Override
+    public List<Author> searchByName(String name) {
+        List<Author> authors = new ArrayList<>();
+        String sql = "SELECT * FROM author WHERE name ILIKE ?";
+        try (Connection conn = DBManager.init();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, "%" + name + "%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                authors.add(new Author(
+                        rs.getString("name"),
+                        rs.getString("last_name")));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error buscando Author por nombre: " + e.getMessage());
+        }
+        return authors;
+    }
+
+    @Override
+    public List<Author> searchByLastName(String lastName) {
+        List<Author> authors = new ArrayList<>();
+        String sql = "SELECT * FROM author WHERE last_name ILIKE ?";
+        try (Connection conn = DBManager.init();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, "%" + lastName + "%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                authors.add(new Author(
+                        rs.getString("name"),
+                        rs.getString("last_name")));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error buscando Author por apellido: " + e.getMessage());
+        }
+        return authors;
+    }
+}
