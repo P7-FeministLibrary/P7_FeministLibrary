@@ -1,18 +1,13 @@
 package com.feministlibrary;
 
 import java.util.Scanner;
-
-import com.feministlibrary.config.DBManager;
-import com.feministlibrary.model.author.Author;
 import com.feministlibrary.model.author.AuthorDAOImplementation;
 import com.feministlibrary.model.author.AuthorDAOInterface;
-import com.feministlibrary.model.genre.Genre;
 import com.feministlibrary.model.genre.GenreDAOImplementation;
 import com.feministlibrary.model.genre.GenreDAOInterface;
 import com.feministlibrary.model.book.Book;
 import com.feministlibrary.model.book.BookDAOImplementation;
 import com.feministlibrary.model.book.BookDAOInterface;
-import com.feministlibrary.model.genre.GenreDAOInterface;
 
 public class App {
 
@@ -47,60 +42,82 @@ public class App {
                     String description = scanner.nextLine();
                     System.out.println("Enter book ISBN code: ");
                     String isbn = scanner.nextLine();
-                    System.out.println("Enter book author (ej. Chimamanda Ngozi Adichie): ");
+                    System.out.println("Enter book author (e.g. Chimamanda Ngozi Adichie): ");
                     String author = scanner.nextLine();
                     System.out.println("Enter book genre: ");
                     String genre = scanner.nextLine();
+
+                    Book newBook = new Book(title, description, isbn);
+                    dao.insert(newBook);
+                    System.out.println("Book added successfully!");
                 }
-                break;
-                
+                    break;
+
                 case "3":
-                    System.out.println("Enter the ID of the book to edit: ");
-                    int editId = Integer.parseInt(scanner.nextLine());
-                    System.out.print("New title: ");
-                    String newTitle = scanner.nextLine();
-                    System.out.print("New description: ");
-                    String newDescription = scanner.nextLine();
-                    System.out.print("New ISBN code: ");
-                    String newIsbn = scanner.nextLine();
-                    Book bookToEdit = dao.getById(editId);
-                    if (bookToEdit != null) {
-                        bookToEdit.setTitle(newTitle);
-                        bookToEdit.setDescription(newDescription);
-                        bookToEdit.setIsbn(newIsbn);
-                        dao.update(bookToEdit);
-                        System.out.println("Book updated successfully!");
-                    } else {
-                        System.out.println("Book not found.");
+                    System.out.print("Enter the title of the book to edit: ");
+                    String titleToEdit = scanner.nextLine();
+                    var booksFound = dao.searchByTitle(titleToEdit);
+
+                    if (booksFound.isEmpty()) {
+                        System.out.println("No book found with that title.");
+                        break;
                     }
+
+                    if (booksFound.size() > 1) {
+                        System.out.println("Multiple books found with that title:");
+                        for (Book b : booksFound) {
+                            System.out.println(b.getIdBook() + " | " + b.getTitle());
+                        }
+                        System.out.print("Enter the ID of the one you want to edit: ");
+                        int chosenId = Integer.parseInt(scanner.nextLine());
+                        booksFound = booksFound.stream()
+                                .filter(b -> b.getIdBook() == chosenId)
+                                .toList();
+                    }
+
+                    if (booksFound.isEmpty()) {
+                        System.out.println("Invalid selection.");
+                        break;
+                    }
+
+                    Book bookToEdit = booksFound.get(0);
+
+                    System.out.print("New title (press Enter to keep current): ");
+                    String newTitle = scanner.nextLine();
+                    if (!newTitle.isEmpty())
+                        bookToEdit.setTitle(newTitle);
+
+                    System.out.print("New description (press Enter to keep current): ");
+                    String newDescription = scanner.nextLine();
+                    if (!newDescription.isEmpty())
+                        bookToEdit.setDescription(newDescription);
+
+                    System.out.print("New ISBN code (press Enter to keep current): ");
+                    String newIsbn = scanner.nextLine();
+                    if (!newIsbn.isEmpty())
+                        bookToEdit.setIsbn(newIsbn);
+
+                    dao.update(bookToEdit);
+                    System.out.println("Book updated successfully!");
+                    break;
+
+                case "0":
+                    running = false;
+                    System.out.println("Exiting the library system. Goodbye!");
+                    break;
+
+                default:
+                    System.out.println("Invalid option, please try again.");
                     break;
             }
         }
 
-        dao.getAll().forEach(System.out::println);
+        scanner.close();
+
         AuthorDAOInterface authorDao = new AuthorDAOImplementation();
-        authorDao.getAll().forEach(System.out::println);
         GenreDAOInterface genreDao = new GenreDAOImplementation();
+
+        authorDao.getAll().forEach(System.out::println);
         genreDao.getAll().forEach(System.out::println);
-
-        /*
-         * Book book = new Book("We should all be feminists", "A book that questions
-         * long-held beliefs and gender stereotypes that perpetuate inequality between
-         * men and women.", "234567832");
-         * dao.insert(book);
-         * authorDao.insert(new Author("Chamamanda", "Ngozi Adichie"));
-         * genreDao.insert(new Genre("Essay"));
-         */
-
-        /*
-         * borrar libro
-         * 
-         * int idToDelete = 9;
-         * dao.delete(9);
-         * 
-         * System.out.println("Libro con ID " + idToDelete +
-         * " borrado de la base de datos.");
-         */
-
     }
 }
