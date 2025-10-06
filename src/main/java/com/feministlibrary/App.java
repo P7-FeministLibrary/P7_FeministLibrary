@@ -38,6 +38,8 @@ public class App {
             switch (option) {
                 case "1":
                     dao.getAll().forEach(System.out::println);
+                    break;
+
                 case "2": {
                     System.out.println("Enter book title: ");
                     String title = scanner.nextLine();
@@ -48,8 +50,30 @@ public class App {
                     System.out.println("Enter book author (ej. Chimamanda Ngozi Adichie): ");
                     String author = scanner.nextLine();
                     System.out.println("Enter book genre: ");
-                    String genre = scanner.nextLine();                    
+                    String genre = scanner.nextLine();
                 }
+                break;
+                
+                case "3":
+                    System.out.println("Enter the ID of the book to edit: ");
+                    int editId = Integer.parseInt(scanner.nextLine());
+                    System.out.print("New title: ");
+                    String newTitle = scanner.nextLine();
+                    System.out.print("New description: ");
+                    String newDescription = scanner.nextLine();
+                    System.out.print("New ISBN code: ");
+                    String newIsbn = scanner.nextLine();
+                    Book bookToEdit = dao.getById(editId);
+                    if (bookToEdit != null) {
+                        bookToEdit.setTitle(newTitle);
+                        bookToEdit.setDescription(newDescription);
+                        bookToEdit.setIsbn(newIsbn);
+                        dao.update(bookToEdit);
+                        System.out.println("Book updated successfully!");
+                    } else {
+                        System.out.println("Book not found.");
+                    }
+                    break;
             }
         }
 
