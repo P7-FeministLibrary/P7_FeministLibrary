@@ -15,10 +15,10 @@ public class GenreDAOImplementation implements GenreDAOInterface {
 
             stmt.setString(1, genre.getGenre());
             stmt.executeUpdate();
-            System.out.println("Genre added successfully");
+            System.out.println("Genre successfully added");
 
         } catch (SQLException e) {
-            System.out.println("Error when adding genre: " + e.getMessage());
+            System.out.println("Unable to add genre: " + e.getMessage());
         }
     }
 
@@ -31,10 +31,10 @@ public class GenreDAOImplementation implements GenreDAOInterface {
             stmt.setString(1, genre.getGenre());
             stmt.setInt(2, genre.getIdGenre());
             stmt.executeUpdate();
-            System.out.println("Genre updated successfully");
+            System.out.println("Genre succesfully added");
 
         } catch (SQLException e) {
-            System.out.println("Error while updating genre: " + e.getMessage());
+            System.out.println("Unable to update genre: " + e.getMessage());
         }
     }
 
@@ -46,10 +46,10 @@ public class GenreDAOImplementation implements GenreDAOInterface {
 
             stmt.setInt(1, idGenre);
             stmt.executeUpdate();
-            System.out.println("Genre deleted successfully");
+            System.out.println("Genre succesfully added");
 
         } catch (SQLException e) {
-            System.out.println("Error deleting genre: " + e.getMessage());
+            System.out.println("Unable to delete genre: " + e.getMessage());
         }
     }
 
@@ -67,7 +67,7 @@ public class GenreDAOImplementation implements GenreDAOInterface {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error searching genre: " + e.getMessage());
+            System.out.println("Error searching book by genre: " + e.getMessage());
         }
         return null;
     }
@@ -86,7 +86,7 @@ public class GenreDAOImplementation implements GenreDAOInterface {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error when listing genres: " + e.getMessage());
+            System.out.println("Unable to list genres: " + e.getMessage());
         }
         return genres;
     }
@@ -106,7 +106,7 @@ public class GenreDAOImplementation implements GenreDAOInterface {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error searching genre by name: " + e.getMessage());
+            System.out.println("Unable to search book by genre: " + e.getMessage());
         }
         return genres;
     }
