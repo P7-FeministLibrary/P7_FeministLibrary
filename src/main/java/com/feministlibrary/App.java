@@ -90,7 +90,7 @@ public class App {
                         System.out.println("No book found with that title.");
                         break;
                     }
-
+                    //REVERLOOOOO!!
                     if (booksFound.size() > 1) {
                         System.out.println("Multiple books found with that title:");
                         for (Book b : booksFound) {
@@ -115,6 +115,18 @@ public class App {
                     if (!newTitle.isEmpty())
                         bookToEdit.setTitle(newTitle);
 
+                    System.out.print("New author (press Enter to keep current): ");
+                    String newAuthorInput = scanner.nextLine();
+                    if (!newAuthorInput.isEmpty()) {
+                        String[] parts = newAuthorInput.split(" ", 2);
+                        String firstName = parts[0];
+                        String lastName = parts.length > 1 ? parts[1] : "";
+                    
+                        Author newAuthor = new Author(firstName, lastName);
+                        authorDao.insert(newAuthor); 
+                        //bookDao.addAuthorToBook(bookToEdit.getIdBook(), newAuthor.getIdAuthor());
+                        System.out.println("New author added to the book!"); }
+
                     System.out.print("New description (press Enter to keep current): ");
                     String newDescription = scanner.nextLine();
                     if (!newDescription.isEmpty())
@@ -128,6 +140,7 @@ public class App {
                     bookDao.update(bookToEdit);
                     System.out.println("Book updated successfully!");
                     break;
+                    
 
                 case "0":
                     running = false;
