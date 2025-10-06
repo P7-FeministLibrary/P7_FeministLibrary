@@ -31,7 +31,7 @@ public class DBManager {
             System.err.println("General Error: " + e.getMessage());
         }
     } else {
-        System.out.println("Conexión ya establecida");
+        System.out.println("Connection established");
     }
         return connection;
     }

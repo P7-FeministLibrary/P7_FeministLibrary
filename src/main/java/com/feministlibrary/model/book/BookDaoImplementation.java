@@ -17,9 +17,9 @@ public class BookDAOImplementation implements BookDAOInterface {
             stmt.setString(2, book.getDescription());
             stmt.setString(3, book.getIsbn());
             stmt.executeUpdate();
-            System.out.println("Libro insertado con éxito");
+            System.out.println("Book successfully added");
         } catch (SQLException e) {
-            System.out.println("Error al insertar libro: " + e.getMessage());
+            System.out.println("Error adding book: " + e.getMessage());
         }
     }
 
@@ -33,9 +33,9 @@ public class BookDAOImplementation implements BookDAOInterface {
             stmt.setString(3, book.getIsbn());
             stmt.setInt(4, book.getIdBook());
             stmt.executeUpdate();
-            System.out.println("Libro actualizado con éxito");
+            System.out.println("Book successfully updated");
         } catch (SQLException e) {
-            System.out.println("Error al actualizar libro: " + e.getMessage());
+            System.out.println("Error adding book: " + e.getMessage());
         }
     }
 
@@ -46,9 +46,9 @@ public class BookDAOImplementation implements BookDAOInterface {
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, idBook);
             stmt.executeUpdate();
-            System.out.println("Libro eliminado con éxito");
+            System.out.println("Book successfully removed");
         } catch (SQLException e) {
-            System.out.println("Error eliminando libro: " + e.getMessage());
+            System.out.println("Error removing book " + e.getMessage());
         }
     }
 
@@ -66,7 +66,7 @@ public class BookDAOImplementation implements BookDAOInterface {
                         rs.getString("isbn"));
             }
         } catch (SQLException e) {
-            System.out.println("Error buscando libro: " + e.getMessage());
+            System.out.println("Unable to find book " + e.getMessage());
         }
         return null;
     }
@@ -85,7 +85,7 @@ public class BookDAOImplementation implements BookDAOInterface {
                         rs.getString("isbn")));
             }
         } catch (SQLException e) {
-            System.out.println("Error al listar libros: " + e.getMessage());
+            System.out.println("Unable to list books " + e.getMessage());
         }
         return books;
     }
@@ -105,7 +105,7 @@ public class BookDAOImplementation implements BookDAOInterface {
                         rs.getString("isbn")));
             }
         } catch (SQLException e) {
-            System.out.println("Error buscando libro por título: " + e.getMessage());
+            System.out.println("Error searching book by title: " + e.getMessage());
         }
         return books;
     }
@@ -131,7 +131,7 @@ public class BookDAOImplementation implements BookDAOInterface {
                         rs.getString("isbn")));
             }
         } catch (SQLException e) {
-            System.out.println("Error buscando libro por autor: " + e.getMessage());
+            System.out.println("Error searching book by author: " + e.getMessage());
         }
         return books;
     }
@@ -157,7 +157,7 @@ public class BookDAOImplementation implements BookDAOInterface {
                         rs.getString("isbn")));
             }
         } catch (SQLException e) {
-            System.out.println("Error buscando libro por género: " + e.getMessage());
+            System.out.println("Error searching booking by genre: " + e.getMessage());
         }
         return books;
     }

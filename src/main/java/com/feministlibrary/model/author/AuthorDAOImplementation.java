@@ -16,10 +16,10 @@ public class AuthorDAOImplementation implements AuthorDAOInterface {
             stmt.setString(1, author.getName());
             stmt.setString(2, author.getLastName());
             stmt.executeUpdate();
-            System.out.println("Author insertado con éxito");
+            System.out.println("Author successfully added");
 
         } catch (SQLException e) {
-            System.out.println("Error al insertar Author: " + e.getMessage());
+            System.out.println("Error adding author: " + e.getMessage());
         }
     }
 
@@ -33,10 +33,10 @@ public class AuthorDAOImplementation implements AuthorDAOInterface {
             stmt.setString(2, author.getLastName());
             stmt.setInt(3, author.getIdAuthor());
             stmt.executeUpdate();
-            System.out.println("Author actualizado con éxito");
+            System.out.println("Author successfully updated");
 
         } catch (SQLException e) {
-            System.out.println("Error al actualizar Author: " + e.getMessage());
+            System.out.println("Error updating author information: " + e.getMessage());
         }
     }
 
@@ -48,10 +48,10 @@ public class AuthorDAOImplementation implements AuthorDAOInterface {
 
             stmt.setInt(1, idAuthor);
             stmt.executeUpdate();
-            System.out.println("Author eliminado con éxito");
+            System.out.println("Author successfully removed");
 
         } catch (SQLException e) {
-            System.out.println("Error eliminando Author: " + e.getMessage());
+            System.out.println("Error removing author: " + e.getMessage());
         }
     }
 
@@ -70,7 +70,7 @@ public class AuthorDAOImplementation implements AuthorDAOInterface {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error buscando Author: " + e.getMessage());
+            System.out.println("Unable to find author: " + e.getMessage());
         }
         return null;
     }
@@ -90,7 +90,7 @@ public class AuthorDAOImplementation implements AuthorDAOInterface {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al listar Authors: " + e.getMessage());
+            System.out.println("Unable to list authors: " + e.getMessage());
         }
         return authors;
     }
@@ -111,7 +111,7 @@ public class AuthorDAOImplementation implements AuthorDAOInterface {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error buscando Author por nombre: " + e.getMessage());
+            System.out.println("Unable to find author by name: " + e.getMessage());
         }
         return authors;
     }
@@ -132,7 +132,7 @@ public class AuthorDAOImplementation implements AuthorDAOInterface {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error buscando Author por apellido: " + e.getMessage());
+            System.out.println("Unable to find author by last name: " + e.getMessage());
         }
         return authors;
     }
