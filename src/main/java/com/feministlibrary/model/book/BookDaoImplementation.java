@@ -7,7 +7,6 @@ import java.util.List;
 
 public class BookDAOImplementation implements BookDAOInterface {
 
-
     @Override
     public void insert(Book book) {
         String sql = "INSERT INTO book (title, description, isbn) VALUES (?, ?, ?)";
@@ -161,5 +160,27 @@ public class BookDAOImplementation implements BookDAOInterface {
         }
         return books;
     }
-}    
 
+    @Override
+    public void addAuthorToBook(int idBook, int idAuthor) {
+              throw new UnsupportedOperationException("Unimplemented method 'addAuthorToBook'");
+    }
+
+    @Override
+    public void updateAuthor(int idAuthor, String newFirstName, String newLastName) {
+        String sql = "UPDATE author SET name = ?, last_name = ? WHERE id_author = ?";
+        try (Connection conn = DBManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, newFirstName);
+            stmt.setString(2, newLastName);
+            stmt.setInt(3, idAuthor);
+            stmt.executeUpdate();
+
+            System.out.println("Author updated successfully!");
+
+        } catch (SQLException e) {
+            System.out.println("Error updating author: " + e.getMessage());
+        }
+    }
+}

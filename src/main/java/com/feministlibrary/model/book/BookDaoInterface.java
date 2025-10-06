@@ -13,5 +13,7 @@ public interface BookDAOInterface {
         List<Book> searchByTitle(String title);
         List<Book> searchByAuthor(String authorName); 
         List<Book> searchByGenre(String genreName);
+        void addAuthorToBook(int idBook, int idAuthor);
+        void updateAuthor(int idAuthor, String newFirstName, String newLastName);
         
     }
