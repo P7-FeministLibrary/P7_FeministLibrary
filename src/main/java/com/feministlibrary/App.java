@@ -123,7 +123,7 @@ public class App {
                         String lastName = parts.length > 1 ? parts[1] : "";
                     
                         Author newAuthor = new Author(firstName, lastName);
-                        authorDao.insert(newAuthor); 
+                        authorDao.update(newAuthor); 
                         //bookDao.addAuthorToBook(bookToEdit.getIdBook(), newAuthor.getIdAuthor());
                         System.out.println("New author added to the book!"); }
 
