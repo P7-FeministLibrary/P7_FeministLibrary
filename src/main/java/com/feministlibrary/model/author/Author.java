@@ -13,7 +13,17 @@ public class Author {
         this.lastName = lastName;
     }
 
+    public Author(int idAuthor, String name, String lastName) {
+        this.idAuthor = idAuthor;
+        this.name = name;
+        this.lastName = lastName;
+    }
+
     public int getIdAuthor() {
+        return this.idAuthor;
+    }
+
+    public int setIdAuthor(int idAuthor) {
         return this.idAuthor;
     }
 

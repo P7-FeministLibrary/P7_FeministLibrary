@@ -11,6 +11,8 @@ public interface AuthorDAOInterface {
 
     List<Author> getAll();
     List<Author> searchByName(String name);
-    List<Author> searchByLastName(String lastName);    
+    List<Author> searchByLastName(String lastName);
+
+    Author getByName(String firstName, String lastName);
 }
 

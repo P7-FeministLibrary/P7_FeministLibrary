@@ -60,9 +60,12 @@ public class App {
                         String[] parts = authorFullName.trim().split(" ", 2);
                         String firstName = parts[0];
                         String lastName = parts.length > 1 ? parts[1] : "";
-                        Author author = new Author(firstName, lastName);
-
-                        authorDao.insert(author);
+                        // lo inserté para que busque en la db antes de crear nuevo autor
+                        Author author = authorDao.getByName(firstName, lastName);
+                        if (author == null) {
+                            author = new Author(firstName, lastName);
+                            authorDao.insert(author);
+                        }
                         authors.add(author);
 
                     }
@@ -90,7 +93,7 @@ public class App {
                         System.out.println("No book found with that title.");
                         break;
                     }
-                    //REVERLOOOOO!!
+                    // REVERLOOOOO!!
                     if (booksFound.size() > 1) {
                         System.out.println("Multiple books found with that title:");
                         for (Book b : booksFound) {
@@ -121,11 +124,12 @@ public class App {
                         String[] parts = newAuthorInput.split(" ", 2);
                         String firstName = parts[0];
                         String lastName = parts.length > 1 ? parts[1] : "";
-                    
+
                         Author newAuthor = new Author(firstName, lastName);
-                        authorDao.update(newAuthor); 
-                        //bookDao.addAuthorToBook(bookToEdit.getIdBook(), newAuthor.getIdAuthor());
-                        System.out.println("New author added to the book!"); }
+                        authorDao.update(newAuthor);
+                        // bookDao.addAuthorToBook(bookToEdit.getIdBook(), newAuthor.getIdAuthor());
+                        System.out.println("New author added to the book!");
+                    }
 
                     System.out.print("New description (press Enter to keep current): ");
                     String newDescription = scanner.nextLine();
@@ -140,24 +144,25 @@ public class App {
                     bookDao.update(bookToEdit);
                     System.out.println("Book updated successfully!");
                     break;
-                
-                    case "4": {  
-                    System.out.println("\n--- Delete Book ---"); 
-                    System.out.print("Enter title to delete: "); 
-                    String titleToDelete = scanner.nextLine(); 
-                    List<Book> found = bookDao.searchByTitle(titleToDelete); 
-                    if (found.isEmpty()) { 
-                        System.out.println("No book found with that title."); 
-                        break; 
-                    } found.forEach(b -> System.out.println(b.getIdBook() + " | " + b.getTitle())); 
-                    System.out.print("Enter ID to delete: "); 
-                
+
+                case "4": {
+                    System.out.println("\n--- Delete Book ---");
+                    System.out.print("Enter title to delete: ");
+                    String titleToDelete = scanner.nextLine();
+                    List<Book> found = bookDao.searchByTitle(titleToDelete);
+                    if (found.isEmpty()) {
+                        System.out.println("No book found with that title.");
+                        break;
+                    }
+                    found.forEach(b -> System.out.println(b.getIdBook() + " | " + b.getTitle()));
+                    System.out.print("Enter ID to delete: ");
+
                     int idToDelete = Integer.parseInt(scanner.nextLine());
-                    bookDao.delete(idToDelete); 
-                    System.out.println("Book deleted successfully!"); 
+                    bookDao.delete(idToDelete);
+                    System.out.println("Book deleted successfully!");
                     break;
-                 }
-                    
+                }
+
                 case "0":
                     running = false;
                     System.out.println("Exiting the library system. Goodbye!");

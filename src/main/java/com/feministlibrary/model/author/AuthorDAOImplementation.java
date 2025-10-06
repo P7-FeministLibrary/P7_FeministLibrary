@@ -136,4 +136,27 @@ public class AuthorDAOImplementation implements AuthorDAOInterface {
         }
         return authors;
     }
+
+    @Override
+    public Author getByName(String firstName, String lastName) {
+        String sql = "SELECT id, name, last_name FROM author WHERE name = ? AND last_name = ?";
+        try (Connection conn = DBManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, firstName);
+            stmt.setString(2, lastName);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Author author = new Author(rs.getString("name"), rs.getString("last_name"));
+                    author.setIdAuthor(rs.getInt("id"));
+                    return author;
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error fetching author: " + e.getMessage());
+        }
+        return null;
+    }
 }
