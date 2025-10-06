@@ -6,7 +6,6 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.SQLException;
 
 
-
 public class DBManager {
     private static Connection connection;
 

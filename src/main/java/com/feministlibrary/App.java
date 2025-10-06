@@ -1,8 +1,13 @@
 package com.feministlibrary;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
+import com.feministlibrary.model.author.Author;
 import com.feministlibrary.model.author.AuthorDAOImplementation;
 import com.feministlibrary.model.author.AuthorDAOInterface;
+import com.feministlibrary.model.genre.Genre;
 import com.feministlibrary.model.genre.GenreDAOImplementation;
 import com.feministlibrary.model.genre.GenreDAOInterface;
 import com.feministlibrary.model.book.Book;
@@ -15,7 +20,9 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
 
-        BookDAOInterface dao = new BookDAOImplementation();
+        BookDAOInterface bookDao = new BookDAOImplementation();
+        AuthorDAOInterface authorDao = new AuthorDAOImplementation();
+        GenreDAOInterface genreDao = new GenreDAOImplementation();
 
         while (running) {
             System.out.println("Welcome to The Matilda Library.");
@@ -32,7 +39,7 @@ public class App {
 
             switch (option) {
                 case "1":
-                    dao.getAll().forEach(System.out::println);
+                    bookDao.getAll().forEach(System.out::println);
                     break;
 
                 case "2": {
@@ -42,21 +49,42 @@ public class App {
                     String description = scanner.nextLine();
                     System.out.println("Enter book ISBN code: ");
                     String isbn = scanner.nextLine();
-                    System.out.println("Enter book author (e.g. Chimamanda Ngozi Adichie): ");
-                    String author = scanner.nextLine();
-                    System.out.println("Enter book genre: ");
-                    String genre = scanner.nextLine();
+
+                    System.out.println(
+                            "Enter book author (separate multiple authors by comma, e.g. Chimamanda Ngozi, Clarice Lispector): ");
+                    String authorsInput = scanner.nextLine().trim();
+                    String[] authorArray = authorsInput.split(",");
+
+                    List<Author> authors = new ArrayList<>();
+                    for (String authorFullName : authorArray) {
+                        String[] parts = authorFullName.trim().split(" ", 2);
+                        String firstName = parts[0];
+                        String lastName = parts.length > 1 ? parts[1] : "";
+                        Author author = new Author(firstName, lastName);
+
+                        authorDao.insert(author);
+                        authors.add(author);
+
+                    }
+
+                    System.out.println("Enter book genres (comma separated, e.g.: Essay, Philosophy): ");
+                    String genresInput = scanner.nextLine().trim();
+                    String[] genreArray = genresInput.split(",");
+                    for (String genreName : genreArray) {
+                        genreDao.insert(new Genre(genreName.trim()));
+                    }
 
                     Book newBook = new Book(title, description, isbn);
-                    dao.insert(newBook);
+                    bookDao.insert(newBook);
+
                     System.out.println("Book added successfully!");
-                }
                     break;
+                }
 
                 case "3":
                     System.out.print("Enter the title of the book to edit: ");
                     String titleToEdit = scanner.nextLine();
-                    var booksFound = dao.searchByTitle(titleToEdit);
+                    var booksFound = bookDao.searchByTitle(titleToEdit);
 
                     if (booksFound.isEmpty()) {
                         System.out.println("No book found with that title.");
@@ -97,7 +125,7 @@ public class App {
                     if (!newIsbn.isEmpty())
                         bookToEdit.setIsbn(newIsbn);
 
-                    dao.update(bookToEdit);
+                    bookDao.update(bookToEdit);
                     System.out.println("Book updated successfully!");
                     break;
 
@@ -113,9 +141,6 @@ public class App {
         }
 
         scanner.close();
-
-        AuthorDAOInterface authorDao = new AuthorDAOImplementation();
-        GenreDAOInterface genreDao = new GenreDAOImplementation();
 
         authorDao.getAll().forEach(System.out::println);
         genreDao.getAll().forEach(System.out::println);
