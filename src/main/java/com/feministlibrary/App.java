@@ -30,9 +30,9 @@ public class App {
             System.out.println("2. Add new book");
             System.out.println("3. Edit book");
             System.out.println("4. Delete book");
-            System.out.println("5. Search for a book by title");
-            System.out.println("6. Search for a book by author");
-            System.out.println("7. Search for a book by genre");
+            System.out.println("5. Search book by title");
+            System.out.println("6. Search book by author");
+            System.out.println("7. Search book by genre");
             System.out.println("0. Exit");
 
             String option = scanner.nextLine().trim();
@@ -140,8 +140,24 @@ public class App {
                     bookDao.update(bookToEdit);
                     System.out.println("Book updated successfully!");
                     break;
+                
+                    case "4": {  
+                    System.out.println("\n--- Delete Book ---"); 
+                    System.out.print("Enter title to delete: "); 
+                    String titleToDelete = scanner.nextLine(); 
+                    List<Book> found = bookDao.searchByTitle(titleToDelete); 
+                    if (found.isEmpty()) { 
+                        System.out.println("No book found with that title."); 
+                        break; 
+                    } found.forEach(b -> System.out.println(b.getIdBook() + " | " + b.getTitle())); 
+                    System.out.print("Enter ID to delete: "); 
+                
+                    int idToDelete = Integer.parseInt(scanner.nextLine());
+                    bookDao.delete(idToDelete); 
+                    System.out.println("Book deleted successfully!"); 
+                    break;
+                 }
                     
-
                 case "0":
                     running = false;
                     System.out.println("Exiting the library system. Goodbye!");

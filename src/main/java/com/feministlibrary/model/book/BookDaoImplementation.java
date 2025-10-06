@@ -11,12 +11,22 @@ public class BookDAOImplementation implements BookDAOInterface {
     public void insert(Book book) {
         String sql = "INSERT INTO book (title, description, isbn) VALUES (?, ?, ?)";
         try (Connection conn = DBManager.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+                // he añadido este statement return etc etc para coger el id generado
+                // por la base de datos pq JAVA no estaba leyendo el id de la DB.
+                PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
             stmt.setString(1, book.getTitle());
             stmt.setString(2, book.getDescription());
             stmt.setString(3, book.getIsbn());
             stmt.executeUpdate();
-            System.out.println("Book successfully added");
+
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    int generatedId = rs.getInt(1);
+                    book.setIdBook(generatedId);
+                    System.out.println("Book inserted with ID: " + generatedId);
+                }
+            }
         } catch (SQLException e) {
             System.out.println("Error adding book: " + e.getMessage());
         }
@@ -60,6 +70,7 @@ public class BookDAOImplementation implements BookDAOInterface {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return new Book(
+                        rs.getInt("id"),
                         rs.getString("title"),
                         rs.getString("description"),
                         rs.getString("isbn"));
@@ -79,6 +90,7 @@ public class BookDAOImplementation implements BookDAOInterface {
                 ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 books.add(new Book(
+                        rs.getInt("id"),
                         rs.getString("title"),
                         rs.getString("description"),
                         rs.getString("isbn")));
@@ -99,6 +111,7 @@ public class BookDAOImplementation implements BookDAOInterface {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 books.add(new Book(
+                        rs.getInt("id"),
                         rs.getString("title"),
                         rs.getString("description"),
                         rs.getString("isbn")));
@@ -113,7 +126,7 @@ public class BookDAOImplementation implements BookDAOInterface {
     public List<Book> searchByAuthor(String authorName) {
         List<Book> books = new ArrayList<>();
         String sql = """
-                SELECT b.id_book, b.title, b.description, b.isbn
+                SELECT b.id, b.title, b.description, b.isbn
                 FROM book b
                 JOIN book_author ba ON b.id = ba.id
                 JOIN author a ON ba.id = a.id
@@ -163,7 +176,7 @@ public class BookDAOImplementation implements BookDAOInterface {
 
     @Override
     public void addAuthorToBook(int idBook, int idAuthor) {
-              throw new UnsupportedOperationException("Unimplemented method 'addAuthorToBook'");
+        throw new UnsupportedOperationException("Unimplemented method 'addAuthorToBook'");
     }
 
     @Override

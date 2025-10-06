@@ -8,8 +8,14 @@ public class Book {
 
     public Book() {}
 
-
     public Book(String title, String description, String isbn) {
+        this.title = title;
+        this.description = description;
+        this.isbn = isbn;
+    }
+
+    public Book(int idBook, String title, String description, String isbn) {
+        this.idBook = idBook;
         this.title = title;
         this.description = description;
         this.isbn = isbn;
@@ -19,9 +25,10 @@ public class Book {
         return this.idBook;
     }
 
-    //public void setIdBook(int idBook) {
-        //this.idBook = idBook;
-    //
+    public void setIdBook(int idBook) {
+        this.idBook = idBook;
+    
+    }
 
     public String getTitle() {
         return this.title;
