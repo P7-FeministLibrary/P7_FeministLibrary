@@ -11,8 +11,6 @@ public class BookDAOImplementation implements BookDAOInterface {
     public void insert(Book book) {
         String sql = "INSERT INTO book (title, description, isbn) VALUES (?, ?, ?)";
         try (Connection conn = DBManager.getConnection();
-                // he añadido este statement return etc etc para coger el id generado
-                // por la base de datos pq JAVA no estaba leyendo el id de la DB.
                 PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, book.getTitle());
@@ -22,9 +20,8 @@ public class BookDAOImplementation implements BookDAOInterface {
 
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
-                    int generatedId = rs.getInt(1);
-                    book.setIdBook(generatedId);
-                    System.out.println("Book inserted with ID: " + generatedId);
+                    book.setIdBook(rs.getInt(1));
+                    System.out.println("Book inserted with ID: " + book.getIdBook());
                 }
             }
         } catch (SQLException e) {
@@ -128,8 +125,8 @@ public class BookDAOImplementation implements BookDAOInterface {
         String sql = """
                 SELECT b.id, b.title, b.description, b.isbn
                 FROM book b
-                JOIN book_author ba ON b.id = ba.id
-                JOIN author a ON ba.id = a.id
+                JOIN book_author ba ON b.id = ba.id_book
+                JOIN author a ON ba.id_author = a.id
                 WHERE a.name ILIKE ?;
                 """;
         try (Connection conn = DBManager.getConnection();
@@ -154,8 +151,8 @@ public class BookDAOImplementation implements BookDAOInterface {
         String sql = """
                 SELECT b.id, b.title, b.description, b.isbn
                 FROM book b
-                JOIN book_genre bg ON b.id = bg.id
-                JOIN genre g ON bg.id = g.id
+                JOIN book_genre bg ON b.id = bg.id_book
+                JOIN genre g ON bg.id_genre = g.id
                 WHERE g.name ILIKE ?;
                 """;
         try (Connection conn = DBManager.getConnection();
@@ -164,6 +161,7 @@ public class BookDAOImplementation implements BookDAOInterface {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 books.add(new Book(
+                        rs.getInt("id"),
                         rs.getString("title"),
                         rs.getString("description"),
                         rs.getString("isbn")));
@@ -176,7 +174,15 @@ public class BookDAOImplementation implements BookDAOInterface {
 
     @Override
     public void addAuthorToBook(int idBook, int idAuthor) {
-        throw new UnsupportedOperationException("Unimplemented method 'addAuthorToBook'");
+        String sql = "INSERT INTO book_author (id_book, id_author) VALUES (?, ?)";
+        try (Connection conn = DBManager.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idBook);
+            stmt.setInt(2, idAuthor);
+            stmt.executeUpdate();
+            System.out.println("Author linked to book successfully!");
+        } catch (SQLException e) {
+            System.out.println("Error linking author to book: " + e.getMessage());
+        }
     }
 
     @Override
