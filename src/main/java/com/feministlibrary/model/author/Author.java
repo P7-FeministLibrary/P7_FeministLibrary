@@ -23,8 +23,8 @@ public class Author {
         return this.idAuthor;
     }
 
-    public int setIdAuthor(int idAuthor) {
-        return this.idAuthor;
+    public void setIdAuthor(int idAuthor) {
+        this.idAuthor = idAuthor;
     }
 
     public String getName() {
