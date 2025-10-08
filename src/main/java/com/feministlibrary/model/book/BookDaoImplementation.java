@@ -187,7 +187,7 @@ public class BookDAOImplementation implements BookDAOInterface {
 
     @Override
     public void updateAuthor(int idAuthor, String newFirstName, String newLastName) {
-        String sql = "UPDATE author SET name = ?, last_name = ? WHERE id_author = ?";
+        String sql = "UPDATE author SET name = ?, last_name = ? WHERE id = ?";
         try (Connection conn = DBManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 

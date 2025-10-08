@@ -11,12 +11,17 @@ public class AuthorDAOImplementation implements AuthorDAOInterface {
     public void insert(Author author) {
         String sql = "INSERT INTO author (name, last_name) VALUES (?, ?)";
         try (Connection conn = DBManager.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, author.getName());
             stmt.setString(2, author.getLastName());
             stmt.executeUpdate();
-            System.out.println("Author successfully added");
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    author.setIdAuthor(rs.getInt("id")); // aquí se usa "id" porque tu columna es solo id
+                }
+            }
+            System.out.println("Author successfully added with ID: " + author.getIdAuthor());
 
         } catch (SQLException e) {
             System.out.println("Error adding author: " + e.getMessage());
