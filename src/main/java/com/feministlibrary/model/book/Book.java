@@ -9,6 +9,9 @@ public class Book {
     private String description;
     private String isbn;
 
+    private List<String> authors = new ArrayList<>();
+    private List<String> genres = new ArrayList<>();
+
     public Book() {
     }
 
@@ -58,11 +61,13 @@ public class Book {
         this.isbn = isbn;
     }
 
-    private List<String> genres = new ArrayList<>();
+    public List<String> getAuthors() {
+        return authors;
+    }
 
-    public void addGenre(String genre) {
-        if (!genres.contains(genre)) {
-            genres.add(genre);
+    public void addAuthor(String author) {
+        if (!authors.contains(author)) {
+            authors.add(author);
         }
     }
 
@@ -70,9 +75,18 @@ public class Book {
         return genres;
     }
 
+    public void addGenre(String genre) {
+        if (!genres.contains(genre)) {
+            genres.add(genre);
+        }
+    }
+
     @Override
     public String toString() {
-        return "[" + idBook + "] " + title + " (ISBN: " + isbn + ") - Genres: " + String.join(", ", genres);
+        return "[" + idBook + "] " + "Title: " + title + " | ISBN: " + isbn + " | "
+                + (description != null && !description.isEmpty() ? "Description: " + description : "")
+                + (!authors.isEmpty() ? " | Authors: " + "[" + String.join(", ", authors) : "") + "]"
+                + (!genres.isEmpty() ? " | Genres: " + "[" + String.join(", ", genres) : "") + "]";
     }
 
 }
