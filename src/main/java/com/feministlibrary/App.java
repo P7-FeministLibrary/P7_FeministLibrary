@@ -1,5 +1,7 @@
 package com.feministlibrary;
 
+import com.feministlibrary.config.DBManager;
+import com.feministlibrary.Style;
 import com.feministlibrary.controller.BookController;
 import com.feministlibrary.controller.AuthorController;
 import com.feministlibrary.controller.GenreController;

@@ -54,5 +54,8 @@ public final class Style {
     public static String styleItalic(String text) {
         return ITALIC + text + RESET;
     }
+    public static String styleOption(String text){
+        return BOLD + YELLOW + text + RESET;
+    }
 
 }
