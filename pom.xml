@@ -32,12 +32,23 @@
         <version>5.5.0</version>
         <scope>test</scope>
     </dependency>
+    
     <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-junit-jupiter</artifactId>
         <version>5.5.0</version>
         <scope>test</scope>
     </dependency>
+
+        <!-- H2 Database (modo memoria, ideal para tests de integración) -->
+      <dependency>
+          <groupId>com.h2database</groupId>
+          <artifactId>h2</artifactId>
+          <version>2.2.224</version>
+          <scope>test</scope>
+      </dependency>
+    
+
     <!-- https://mvnrepository.com/artifact/io.github.cdimascio/dotenv-java -->
     <dependency>
         <groupId>io.github.cdimascio</groupId>
@@ -51,6 +62,7 @@
       <artifactId>postgresql</artifactId>
       <version>42.7.8</version>
     </dependency>
+
   </dependencies>
 
   <build>

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.SQLException;
+import com.feministlibrary.Style;
 
 public class DBManager {
 
@@ -22,10 +23,12 @@ public class DBManager {
 
     public static void main(String[] args) {
         try (Connection conn = getConnection()) {
-            System.out.println("You have successfully connected to The Matilda Library!");
+            System.out.println(Style.styleGreen("You have successfully connected to The Matilda Library!"));
         } catch (SQLException e) {
-            System.err.println("Error when trying to connect: " + e.getMessage());
+            System.err.println(Style.styleRed("Error when trying to connect: \n " + e.getMessage()));
+            return;
         }
+            System.out.println(Style.styleGreen("Disconnected from The Matilda Library"));
     }
 
 

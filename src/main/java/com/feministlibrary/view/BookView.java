@@ -1,13 +1,14 @@
 package com.feministlibrary.view;
 
 import java.util.Scanner;
+import com.feministlibrary.Style;
 
 public class BookView {
 
     private final Scanner scanner = new Scanner(System.in);
 
     public String showMenu() {
-        System.out.println("Welcome to The Matilda Library.");
+        System.out.println(Style.titleStyle("\n     Welcome to The Matilda Library.     \n"));
         System.out.println("1. List book catalog");
         System.out.println("2. Add new book");
         System.out.println("3. Edit book");
