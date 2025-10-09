@@ -6,7 +6,6 @@ public interface AuthorDAOInterface {
 
     void insert(Author author);             
     void update(Author author);            
-    void delete(int idAuthor);              
     Author getById(int idAuthor);          
 
     List<Author> getAll();                 

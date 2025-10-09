@@ -44,19 +44,6 @@ public class GenreDAOImplementation implements GenreDAOInterface {
     }
 
     @Override
-    public void delete(int idGenre) {
-        String sql = "DELETE FROM genre WHERE id=?";
-        try (Connection conn = DBManager.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, idGenre);
-            stmt.executeUpdate();
-            System.out.println("Genre successfully deleted");
-        } catch (SQLException e) {
-            System.out.println("Unable to delete genre: " + e.getMessage());
-        }
-    }
-
-    @Override
     public Genre getById(int idGenre) {
         String sql = "SELECT * FROM genre WHERE id=?";
         try (Connection conn = DBManager.getConnection();

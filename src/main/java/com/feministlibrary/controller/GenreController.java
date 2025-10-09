@@ -49,17 +49,5 @@ public class GenreController {
         genreDao.update(genre);
         view.showMessage("Genre updated successfully!");
     }
-
-    public void deleteGenre() {
-        String name = view.getGenreName();
-        Genre genre = genreDao.getByName(name);
-        if (genre == null) {
-            view.showMessage("Genre not found.");
-            return;
-        }
-
-        genreDao.delete(genre.getIdGenre());
-        view.showMessage("Genre deleted successfully!");
-    }
 }
 

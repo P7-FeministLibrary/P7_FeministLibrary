@@ -19,4 +19,7 @@ public interface BookDAOInterface {
 
     void updateAuthor(int idAuthor, String newFirstName, String newLastName);
 
+    void removeAuthorsFromBook(int idBook);
+    void removeGenresFromBook(int idBook);
+
 }

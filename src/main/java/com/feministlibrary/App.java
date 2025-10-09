@@ -41,11 +41,9 @@ public class App {
                 case "8" -> authorController.listAuthors();
                 case "9" -> authorController.addAuthor();
                 case "10" -> authorController.editAuthor();
-                case "11" -> authorController.deleteAuthor();
                 case "12" -> genreController.listGenres();
                 case "13" -> genreController.addGenre();
                 case "14" -> genreController.editGenre();
-                case "15" -> genreController.deleteGenre();
                 case "0" -> running = false;
                 default -> bookView.showMessage("Invalid option, please try again.");
             }

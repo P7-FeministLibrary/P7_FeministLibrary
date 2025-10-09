@@ -45,20 +45,6 @@ public class AuthorDAOImplementation implements AuthorDAOInterface {
         }
     }
 
-    @Override
-    public void delete(int idAuthor) {
-        String sql = "DELETE FROM author WHERE id=?";
-        try (Connection conn = DBManager.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, idAuthor);
-            stmt.executeUpdate();
-            System.out.println("Author successfully removed");
-
-        } catch (SQLException e) {
-            System.out.println("Error removing author: " + e.getMessage());
-        }
-    }
 
     @Override
     public Author getById(int idAuthor) {

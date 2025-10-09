@@ -1,7 +1,6 @@
 package com.feministlibrary.controller;
 
 import java.util.List;
-
 import com.feministlibrary.model.author.Author;
 import com.feministlibrary.model.author.AuthorDAOInterface;
 import com.feministlibrary.model.book.Book;
@@ -39,16 +38,13 @@ public class BookController {
         String description = view.getInput("Enter book description: ");
         String isbn = view.getInput("Enter ISBN code: ");
 
-        String authorsInput = view.getInput(
-                "Enter author(s) (comma separated, e.g. First Last, First2 Last2): ");
+        String authorsInput = view.getInput("Enter author(s) (comma separated, e.g. First Last, First2 Last2): ");
         String[] authorArray = authorsInput.split(",");
-        for (int i = 0; i < authorArray.length; i++)
-            authorArray[i] = authorArray[i].trim();
+        for (int i = 0; i < authorArray.length; i++) authorArray[i] = authorArray[i].trim();
 
         Book book = new Book(title, description, isbn);
         bookDao.insert(book);
 
-        // Add authors to DB and link them
         for (String fullName : authorArray) {
             String[] parts = fullName.split(" ", 2);
             String firstName = parts[0];
@@ -100,16 +96,51 @@ public class BookController {
         }
 
         String newTitle = view.getInput("New title (Enter to keep current): ");
-        if (!newTitle.isEmpty())
-            book.setTitle(newTitle);
+        if (!newTitle.isEmpty()) book.setTitle(newTitle);
 
         String newDescription = view.getInput("New description (Enter to keep current): ");
-        if (!newDescription.isEmpty())
-            book.setDescription(newDescription);
+        if (!newDescription.isEmpty()) book.setDescription(newDescription);
 
         String newIsbn = view.getInput("New ISBN (Enter to keep current): ");
-        if (!newIsbn.isEmpty())
-            book.setIsbn(newIsbn);
+        if (!newIsbn.isEmpty()) book.setIsbn(newIsbn);
+
+        view.showMessage("Current authors: " + String.join(", ", book.getAuthors()));
+        String authorsInput = view.getInput("Enter new author(s) (comma separated, Enter to keep current): ");
+        if (!authorsInput.isEmpty()) {
+            bookDao.removeAuthorsFromBook(book.getIdBook());
+            String[] authorArray = authorsInput.split(",");
+            for (int i = 0; i < authorArray.length; i++) authorArray[i] = authorArray[i].trim();
+
+            for (String fullName : authorArray) {
+                String[] parts = fullName.split(" ", 2);
+                String firstName = parts[0];
+                String lastName = parts.length > 1 ? parts[1] : "";
+
+                Author author = authorDao.getByName(firstName, lastName);
+                if (author == null) {
+                    author = new Author(firstName, lastName);
+                    authorDao.insert(author);
+                }
+
+                bookDao.addAuthorToBook(book.getIdBook(), author.getIdAuthor());
+            }
+        }
+
+        view.showMessage("Current genres: " + String.join(", ", book.getGenres()));
+        String genresInput = view.getInput("Enter new genres (comma separated, Enter to keep current): ");
+        if (!genresInput.isEmpty()) {
+            bookDao.removeGenresFromBook(book.getIdBook());
+            String[] genreArray = genresInput.split(",");
+            for (String genreName : genreArray) {
+                genreName = genreName.trim();
+                Genre genre = genreDao.getByName(genreName);
+                if (genre == null) {
+                    genre = new Genre(genreName);
+                    genreDao.insert(genre);
+                }
+                bookDao.addGenreToBook(book.getIdBook(), genre.getIdGenre());
+            }
+        }
 
         bookDao.update(book);
         view.showMessage("Book updated successfully!");
@@ -145,8 +176,8 @@ public class BookController {
         List<Book> books = bookDao.searchByGenre(genreName);
         if (books.isEmpty()) {
             view.showMessage("No books found for genre: " + genreName);
-        } else { 
+        } else {
             books.forEach(b -> view.showMessage(b.toString()));
+        }
     }
-}
 }

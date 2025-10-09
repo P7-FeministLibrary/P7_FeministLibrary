@@ -63,19 +63,4 @@ public class AuthorController {
         view.showMessage("Author updated successfully!");
     }
 
-    public void deleteAuthor() {
-        String fullName = view.getAuthorFullName();
-        String[] parts = fullName.split(" ", 2);
-        String firstName = parts[0];
-        String lastName = parts.length > 1 ? parts[1] : "";
-
-        Author author = authorDao.getByName(firstName, lastName);
-        if (author == null) {
-            view.showMessage("Author not found.");
-            return;
-        }
-
-        authorDao.delete(author.getIdAuthor());
-        view.showMessage("Author deleted successfully!");
-    }
 }
