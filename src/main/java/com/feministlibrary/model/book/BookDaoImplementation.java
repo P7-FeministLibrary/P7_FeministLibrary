@@ -105,40 +105,107 @@ public class BookDAOImplementation implements BookDAOInterface {
     @Override
     public List<Book> getAll() {
         List<Book> books = new ArrayList<>();
-        String sql = "SELECT * FROM book";
+        String sql = """
+                SELECT b.id AS book_id, b.title, b.description, b.isbn,
+                       a.name AS author_name, a.last_name AS author_last,
+                       g.genre AS genre_name
+                FROM book b
+                LEFT JOIN book_author ba ON b.id = ba.id_book
+                LEFT JOIN author a ON ba.id_author = a.id
+                LEFT JOIN book_genre bg ON b.id = bg.id_book
+                LEFT JOIN genre g ON bg.id_genre = g.id
+                ORDER BY b.id;
+                """;
+        ;
         try (Connection conn = DBManager.getConnection();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
+
+            Map<Integer, Book> bookMap = new LinkedHashMap<>();
+
             while (rs.next()) {
-                books.add(new Book(
-                        rs.getInt("id"),
-                        rs.getString("title"),
-                        rs.getString("description"),
-                        rs.getString("isbn")));
+                int bookId = rs.getInt("book_id");
+
+                Book book = bookMap.get(bookId);
+                if (book == null) {
+                    book = new Book(
+                            bookId,
+                            rs.getString("title"),
+                            null,
+                            rs.getString("isbn"));
+                    bookMap.put(bookId, book);
+                }
+
+                String fullAuthorName = rs.getString("author_name") + " " + rs.getString("author_last");
+                if (!book.getAuthors().contains(fullAuthorName)) {
+                    book.addAuthor(fullAuthorName);
+                }
+
+                String genreName = rs.getString("genre_name");
+                if (genreName != null && !book.getGenres().contains(genreName)) {
+                    book.addGenre(genreName);
+                }
             }
+
+            books.addAll(bookMap.values());
+
         } catch (SQLException e) {
-            System.out.println("Unable to list books " + e.getMessage());
+            System.out.println("Unable to list books" + e.getMessage());
         }
+
         return books;
     }
 
     @Override
     public List<Book> searchByTitle(String title) {
         List<Book> books = new ArrayList<>();
-        String sql = "SELECT * FROM book WHERE title ILIKE ?";
+        String sql = """
+            SELECT b.id AS book_id, b.title, b.description, b.isbn,
+                a.name AS author_name, a.last_name AS author_last,
+                 g.genre AS genre_name
+            FROM book b
+            JOIN book_author ba ON b.id = ba.id_book
+            JOIN author a ON ba.id_author = a.id
+            LEFT JOIN book_genre bg ON b.id = bg.id_book
+            LEFT JOIN genre g ON bg.id_genre = g.id
+            WHERE b.title ILIKE ?
+            ORDER BY b.id;
+        """;
         try (Connection conn = DBManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, "%" + title + "%");
             ResultSet rs = stmt.executeQuery();
+
+            Map<Integer, Book> bookMap = new LinkedHashMap<>();
+
             while (rs.next()) {
-                books.add(new Book(
-                        rs.getInt("id"),
-                        rs.getString("title"),
-                        rs.getString("description"),
-                        rs.getString("isbn")));
+                int bookId = rs.getInt("book_id");
+                Book book = bookMap.get(bookId);
+                if (book == null) {
+                    book = new Book(
+                            bookId,
+                            rs.getString("title"),
+                            rs.getString("description"),
+                            rs.getString("isbn"));
+                    bookMap.put(bookId, book);
+                }
+
+                String fullAuthorName = rs.getString("author_name") + " " + rs.getString("author_last");
+                if (!book.getAuthors().contains(fullAuthorName)) {
+                    book.addAuthor(fullAuthorName);
+                }
+
+                String genreName = rs.getString("genre_name");
+                if (genreName != null && !book.getGenres().contains(genreName)) {
+                    book.addGenre(genreName);
+                }
             }
+
+            books.addAll(bookMap.values());
+
         } catch (SQLException e) {
-            System.out.println("Error searching book by title: " + e.getMessage());
+            System.out.println("Error searching book by author: " + e.getMessage());
         }
         return books;
     }
@@ -226,7 +293,7 @@ public class BookDAOImplementation implements BookDAOInterface {
                     book = new Book(
                             bookId,
                             rs.getString("title"),
-                            null, 
+                            null,
                             rs.getString("isbn"));
                     bookMap.put(bookId, book);
                 }
