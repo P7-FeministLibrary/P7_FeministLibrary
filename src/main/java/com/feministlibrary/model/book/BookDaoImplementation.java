@@ -49,12 +49,33 @@ public class BookDAOImplementation implements BookDAOInterface {
 
     @Override
     public void delete(int idBook) {
-        String sql = "DELETE FROM book WHERE id=?";
-        try (Connection conn = DBManager.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, idBook);
-            stmt.executeUpdate();
-            System.out.println("Book successfully removed");
+        String sqlDeleteBookAuthor = "DELETE FROM book_author WHERE id_book = ?";
+        String sqlDeleteBookGenre = "DELETE FROM book_genre WHERE id_book = ?";
+        String sqlDeleteBook = "DELETE FROM book WHERE id=?";
+
+        try (Connection conn = DBManager.getConnection()) {
+            Book bookToDelete = getById(idBook);
+            if (bookToDelete == null) {
+                System.out.println("Book with ID " + idBook + " not found.");
+                return;
+            }
+
+            try (PreparedStatement stmt = conn.prepareStatement(sqlDeleteBookAuthor)) {
+                stmt.setInt(1, idBook);
+                stmt.executeUpdate();
+            }
+            try (PreparedStatement stmt = conn.prepareStatement(sqlDeleteBookGenre)) {
+                stmt.setInt(1, idBook);
+                stmt.executeUpdate();
+            }
+
+            try (PreparedStatement stmt = conn.prepareStatement(sqlDeleteBook)) {
+                stmt.setInt(1, idBook);
+                stmt.executeUpdate();
+            }
+
+            System.out.println("Book " + bookToDelete.getTitle() + " with ID " + bookToDelete.getIdBook() +
+                    " and its relations were successfully removed");
         } catch (SQLException e) {
             System.out.println("Error removing book " + e.getMessage());
         }
@@ -125,18 +146,25 @@ public class BookDAOImplementation implements BookDAOInterface {
     public List<Book> searchByAuthor(String authorName) {
         List<Book> books = new ArrayList<>();
         String sql = """
-                SELECT b.id, b.title, b.description, b.isbn
+                SELECT b.id AS book_id, b.title, b.description, b.isbn,
+                       a.id AS author_id, a.name AS author_name, a.last_name AS author_last,
+                       g.id AS genre_id, g.genre AS genre_name
                 FROM book b
                 JOIN book_author ba ON b.id = ba.id_book
                 JOIN author a ON ba.id_author = a.id
-                WHERE a.name ILIKE ?;
+                LEFT JOIN book_genre bg ON b.id = bg.id_book
+                LEFT JOIN genre g ON bg.id_genre = g.id
+                WHERE CONCAT(a.name, ' ', a.last_name) ILIKE ?;
                 """;
         try (Connection conn = DBManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, "%" + authorName + "%");
             ResultSet rs = stmt.executeQuery();
+
             while (rs.next()) {
                 books.add(new Book(
+                        rs.getInt("id"),
                         rs.getString("title"),
                         rs.getString("description"),
                         rs.getString("isbn")));
@@ -180,7 +208,7 @@ public class BookDAOImplementation implements BookDAOInterface {
                     bookMap.put(bookId, book);
                 }
 
-            book.addGenre(rs.getString("genre"));
+                book.addGenre(rs.getString("genre"));
             }
 
             books.addAll(bookMap.values());
