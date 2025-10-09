@@ -146,14 +146,10 @@ public class BookDAOImplementation implements BookDAOInterface {
     public List<Book> searchByAuthor(String authorName) {
         List<Book> books = new ArrayList<>();
         String sql = """
-                SELECT b.id AS book_id, b.title, b.description, b.isbn,
-                       a.id AS author_id, a.name AS author_name, a.last_name AS author_last,
-                       g.id AS genre_id, g.genre AS genre_name
+                SELECT b.id, b.title, b.description, b.isbn
                 FROM book b
                 JOIN book_author ba ON b.id = ba.id_book
                 JOIN author a ON ba.id_author = a.id
-                LEFT JOIN book_genre bg ON b.id = bg.id_book
-                LEFT JOIN genre g ON bg.id_genre = g.id
                 WHERE CONCAT(a.name, ' ', a.last_name) ILIKE ?;
                 """;
         try (Connection conn = DBManager.getConnection();
