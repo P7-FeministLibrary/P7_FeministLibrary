@@ -60,7 +60,7 @@ public class BookController {
                 authorDao.insert(author);
             }
 
-            //bookDao.addAuthorToBook(book.getIdBook(), author.getIdAuthor());
+            bookDao.addAuthorToBook(book.getIdBook(), author.getIdAuthor());
         }
 
         String genresInput = view.getInput("Enter genres (comma separated): ");
@@ -72,7 +72,7 @@ public class BookController {
                 genre = new Genre(genreName);
                 genreDao.insert(genre);
             }
-           // bookDao.addGenreToBook(book.getIdBook(), genre.getIdGenre());
+            bookDao.addGenreToBook(book.getIdBook(), genre.getIdGenre());
         }
 
         view.showMessage("Book added successfully!");

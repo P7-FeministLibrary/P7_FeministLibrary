@@ -9,11 +9,15 @@
 
         @Override
         public void insert(Genre genre) {
-            String sql = "INSERT INTO genre (genre) VALUES (?)";
+            String sql = "INSERT INTO genre (genre) VALUES (?) RETURNING id";
             try (Connection conn = DBManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, genre.getGenre());
-                stmt.executeUpdate();
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        genre.setIdGenre(rs.getInt(1));
+                    }
+                }
                 System.out.println("Genre successfully added");
             } catch (SQLException e) {
                 System.out.println("Unable to add genre: " + e.getMessage());
@@ -55,7 +59,9 @@
                 stmt.setInt(1, idGenre);
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
-                    return new Genre(rs.getString("genre"));
+                    Genre g = new Genre(rs.getString("genre"));
+                    g.setIdGenre(rs.getInt("id"));
+                    return g;
                 }
             } catch (SQLException e) {
                 System.out.println("Error searching genre by ID: " + e.getMessage());
@@ -71,7 +77,9 @@
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
-                    genres.add(new Genre(rs.getString("genre")));
+                    Genre g = new Genre(rs.getString("genre"));
+                    g.setIdGenre(rs.getInt("id"));
+                    genres.add(g);
                 }
             } catch (SQLException e) {
                 System.out.println("Unable to list genres: " + e.getMessage());
@@ -88,7 +96,9 @@
                 stmt.setString(1, "%" + genre + "%");
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()) {
-                    genres.add(new Genre(rs.getString("genre")));
+                    Genre g = new Genre(rs.getString("genre"));
+                    g.setIdGenre(rs.getInt("id"));
+                    genres.add(g);
                 }
             } catch (SQLException e) {
                 System.out.println("Unable to search genre by name: " + e.getMessage());
@@ -98,13 +108,15 @@
 
         @Override
         public Genre getByName(String name) {
-            String sql = "SELECT * FROM genre WHERE genre ILIKE ?";
+            String sql = "SELECT id, genre FROM genre WHERE genre ILIKE ?";
             try (Connection conn = DBManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, name);
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
-                    return new Genre(rs.getString("genre"));
+                    Genre g = new Genre(rs.getString("genre"));
+                    g.setIdGenre(rs.getInt("id"));
+                    return g;
                 }
             } catch (SQLException e) {
                 System.out.println("Error searching genre by name: " + e.getMessage());

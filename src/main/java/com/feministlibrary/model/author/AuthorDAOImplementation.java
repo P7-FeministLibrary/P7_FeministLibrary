@@ -9,13 +9,17 @@ public class AuthorDAOImplementation implements AuthorDAOInterface {
 
     @Override
     public void insert(Author author) {
-        String sql = "INSERT INTO author (name, last_name) VALUES (?, ?)";
+        String sql = "INSERT INTO author (name, last_name) VALUES (?, ?) RETURNING id";
         try (Connection conn = DBManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, author.getName());
             stmt.setString(2, author.getLastName());
-            stmt.executeUpdate();
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    author.setIdAuthor(rs.getInt(1));
+                }
+            }
             System.out.println("Author successfully added");
 
         } catch (SQLException e) {
@@ -64,9 +68,11 @@ public class AuthorDAOImplementation implements AuthorDAOInterface {
             stmt.setInt(1, idAuthor);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new Author(
+                Author author = new Author(
                         rs.getString("name"),
                         rs.getString("last_name"));
+                author.setIdAuthor(rs.getInt("id"));
+                return author;
             }
 
         } catch (SQLException e) {
