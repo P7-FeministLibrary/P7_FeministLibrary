@@ -1,22 +1,22 @@
 package com.feministlibrary;
 
 import com.feministlibrary.config.DBManager;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import com.feministlibrary.Style;
-import com.feministlibrary.controller.BookController;
-import com.feministlibrary.controller.AuthorController;
-import com.feministlibrary.controller.GenreController;
-import com.feministlibrary.model.author.AuthorDAOImplementation;
-import com.feministlibrary.model.author.AuthorDAOInterface;
-import com.feministlibrary.model.book.BookDAOImplementation;
-import com.feministlibrary.model.book.BookDAOInterface;
-import com.feministlibrary.model.genre.GenreDAOImplementation;
-import com.feministlibrary.model.genre.GenreDAOInterface;
-import com.feministlibrary.view.BookView;
-import com.feministlibrary.view.AuthorView;
-import com.feministlibrary.view.GenreView;
+import com.feministlibrary.controller.*;
+import com.feministlibrary.model.author.*;
+import com.feministlibrary.model.book.*;
+import com.feministlibrary.model.genre.*;
+import com.feministlibrary.view.*;
 
 public class App {
     public static void main(String[] args) {
+        try (Connection conn = DBManager.getConnection()) {
+            System.out.println(Style.styleGreen("Successfully connected to The Matilda Library's database."));
+
         BookView bookView = new BookView();
         AuthorView authorView = new AuthorView();
         GenreView genreView = new GenreView();
@@ -46,11 +46,19 @@ public class App {
                 case "12" -> genreController.listGenres();
                 case "13" -> genreController.addGenre();
                 case "14" -> genreController.editGenre();
-                case "0" -> running = false;
-                default -> bookView.showMessage("Invalid option, please try again.");
+                case "0" -> {
+                    running = false;
+                    System.out.println(Style.styleGreen("Successfully disconnected from The Matilda Library's database"));
+                }
+                default -> bookView.showMessage(Style.styleRed("Invalid option, please try again."));
             }
         }
         bookView.close();
+    } catch (SQLException e) {
+        System.out.println(Style.styleRed("Connection failed: \n" +e.getMessage()));
+    
+    }
     }
 }
+
 
