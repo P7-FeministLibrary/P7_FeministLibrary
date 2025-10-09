@@ -72,7 +72,7 @@ public class BookController {
                 genre = new Genre(genreName);
                 genreDao.insert(genre);
             }
-           // bookDao.addGenreToBook(book.getIdBook(), genre.getIdGenre());
+            bookDao.addGenreToBook(book.getIdBook(), genre.getIdGenre());
         }
 
         view.showMessage("Book added successfully!");
@@ -143,6 +143,10 @@ public class BookController {
     public void searchByGenre() {
         String genreName = view.getInput("Enter genre to search: ");
         List<Book> books = bookDao.searchByGenre(genreName);
-        books.forEach(b -> view.showMessage(b.toString()));
+        if (books.isEmpty()) {
+            view.showMessage("No books found for genre: " + genreName);
+        } else { 
+            books.forEach(b -> view.showMessage(b.toString()));
     }
+}
 }

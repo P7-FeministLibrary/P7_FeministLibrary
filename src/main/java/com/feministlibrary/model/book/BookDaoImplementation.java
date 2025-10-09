@@ -3,7 +3,9 @@ package com.feministlibrary.model.book;
 import com.feministlibrary.config.DBManager;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BookDAOImplementation implements BookDAOInterface {
 
@@ -149,26 +151,44 @@ public class BookDAOImplementation implements BookDAOInterface {
     public List<Book> searchByGenre(String genreName) {
         List<Book> books = new ArrayList<>();
         String sql = """
-                SELECT b.id, b.title, b.description, b.isbn
-                FROM book b
-                JOIN book_genre bg ON b.id = bg.id_book
-                JOIN genre g ON bg.id_genre = g.id
-                WHERE g.name ILIKE ?;
+                    SELECT b.id, b.title, b.description, b.isbn, g.genre
+                    FROM book b
+                    JOIN book_genre bg ON b.id = bg.id_book
+                    JOIN genre g ON bg.id_genre = g.id
+                    WHERE g.genre ILIKE ?;
                 """;
+
         try (Connection conn = DBManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, "%" + genreName + "%");
             ResultSet rs = stmt.executeQuery();
+
+            Map<Integer, Book> bookMap = new LinkedHashMap<>();
+
             while (rs.next()) {
-                books.add(new Book(
-                        rs.getInt("id"),
-                        rs.getString("title"),
-                        rs.getString("description"),
-                        rs.getString("isbn")));
+                int bookId = rs.getInt("id");
+                Book book;
+                if (bookMap.containsKey(bookId)) {
+                    book = bookMap.get(bookId);
+                } else {
+                    book = new Book(
+                            bookId,
+                            rs.getString("title"),
+                            rs.getString("description"),
+                            rs.getString("isbn"));
+                    bookMap.put(bookId, book);
+                }
+
+            book.addGenre(rs.getString("genre"));
             }
+
+            books.addAll(bookMap.values());
+
         } catch (SQLException e) {
-            System.out.println("Error searching booking by genre: " + e.getMessage());
+            System.out.println("Error searching book by genre: " + e.getMessage());
         }
+
         return books;
     }
 
@@ -205,7 +225,17 @@ public class BookDAOImplementation implements BookDAOInterface {
 
     @Override
     public void addGenreToBook(int idBook, int idGenre) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addGenreToBook'");
+        String sql = "INSERT INTO book_genre (id_book, id_genre) VALUES (?, ?)";
+        try (Connection conn = DBManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idBook);
+            stmt.setInt(2, idGenre);
+            stmt.executeUpdate();
+            System.out.println("Genre linked to book successfully!");
+
+        } catch (SQLException e) {
+            System.out.println("Error linking genre to book: " + e.getMessage());
+        }
     }
 }
