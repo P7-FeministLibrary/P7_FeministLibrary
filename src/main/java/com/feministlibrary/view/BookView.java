@@ -30,10 +30,12 @@ public class BookView {
         System.out.println(message);
     }
 
-    public String getInput(String prompt) {
+    public String getInput(String prompt) throws BackToMenuException {
         System.out.print(prompt);
-        return scanner.nextLine().trim();
-    }
+        String input = scanner.nextLine().trim();
+        if (input.equals("0")) throw new BackToMenuException();
+        return input;
+     }
 
     public void close() {
         scanner.close();
