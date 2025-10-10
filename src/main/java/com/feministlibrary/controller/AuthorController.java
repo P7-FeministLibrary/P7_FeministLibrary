@@ -17,23 +17,18 @@ public class AuthorController {
 
     public void listAuthors() {
         List<Author> authors = authorDao.getAll();
-        if (authors.isEmpty()) {
-            view.showMessage("No authors found.");
-        } else {
-            authors.forEach(a -> view.showMessage(a.toString()));
-        }
+        if (authors.isEmpty()) view.showMessage("No authors found.");
+        else authors.forEach(a -> view.showMessage(a.toString()));
     }
 
     public void addAuthor() {
-        String fullName = view.getAuthorFullName();
-        String[] parts = fullName.split(" ", 2);
+        String[] parts = view.getAuthorFullName().split(" ", 2);
         String firstName = parts[0];
         String lastName = parts.length > 1 ? parts[1] : "";
 
         Author author = authorDao.getByName(firstName, lastName);
         if (author == null) {
-            author = new Author(firstName, lastName);
-            authorDao.insert(author);
+            authorDao.insert(new Author(firstName, lastName));
             view.showMessage("Author added successfully!");
         } else {
             view.showMessage("Author already exists.");
@@ -41,8 +36,7 @@ public class AuthorController {
     }
 
     public void editAuthor() {
-        String fullName = view.getAuthorFullName();
-        String[] parts = fullName.split(" ", 2);
+        String[] parts = view.getAuthorFullName().split(" ", 2);
         String firstName = parts[0];
         String lastName = parts.length > 1 ? parts[1] : "";
 
@@ -52,15 +46,10 @@ public class AuthorController {
             return;
         }
 
-        String newFullName = view.getAuthorFullName();
-        String[] newParts = newFullName.split(" ", 2);
-        String updatedFirst = newParts[0];
-        String updatedLast = newParts.length > 1 ? newParts[1] : "";
-
-        author.setName(updatedFirst);
-        author.setLastName(updatedLast);
+        String[] newParts = view.getAuthorFullName().split(" ", 2);
+        author.setName(newParts[0]);
+        author.setLastName(newParts.length > 1 ? newParts[1] : "");
         authorDao.update(author);
         view.showMessage("Author updated successfully!");
     }
-
 }

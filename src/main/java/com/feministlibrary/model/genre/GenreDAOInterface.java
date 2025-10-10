@@ -3,7 +3,6 @@ package com.feministlibrary.model.genre;
 import java.util.List;
 
 public interface GenreDAOInterface {
-
     void insert(Genre genre);
     void update(Genre genre);
     Genre getById(int idGenre);

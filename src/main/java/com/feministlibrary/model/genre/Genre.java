@@ -4,33 +4,17 @@ public class Genre {
     private int idGenre;
     private String genre;
 
-    public Genre() {
-    }
+    public Genre() {}
+    public Genre(String genre) { this.genre = genre; }
 
-    public Genre(String genre) {
-        this.genre = genre;
-    }
+    public int getIdGenre() { return idGenre; }
+    public void setIdGenre(int idGenre) { this.idGenre = idGenre; }
 
-    public int getIdGenre() {
-        return this.idGenre;
-    }
-
-    public void setIdGenre(int idGenre) {
-        this.idGenre = idGenre;
-    }
-
-    public String getGenre() {
-        return this.genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
+    public String getGenre() { return genre; }
+    public void setGenre(String genre) { this.genre = genre; }
 
     @Override
     public String toString() {
-        return "Genre{" +
-                ", genre='" + genre + '\'' +
-                '}';
+        return genre;
     }
 }
