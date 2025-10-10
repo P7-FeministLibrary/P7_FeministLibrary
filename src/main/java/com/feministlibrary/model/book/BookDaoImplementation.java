@@ -200,6 +200,7 @@ public class BookDAOImplementation implements BookDAOInterface {
                 if (genreName != null && !book.getGenres().contains(genreName)) {
                     book.addGenre(genreName);
                 }
+                
             }
 
             books.addAll(bookMap.values());
