@@ -5,7 +5,6 @@ import com.feministlibrary.config.DBManager;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import com.feministlibrary.Style;
 import com.feministlibrary.controller.*;
 import com.feministlibrary.model.author.*;
 import com.feministlibrary.model.book.*;
