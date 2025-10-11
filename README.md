@@ -1,53 +1,57 @@
-📚 Biblioteca Feminista
-🎯 Objetivo
+📚 Feminist Library
 
-La Biblioteca Feminista de nuestro barrio se quiere modernizar.
-El proyecto tiene como meta desarrollar un sistema de gestión de libros que permita a los administradores:
+🎯 Objective:
 
-1. Ver lista de libros
-2. Añadir nuevos libros.
-3. Editar información existente.
-4. Eliminar libros del catálogo.
-5. Buscar libros por título.
-6. Buscar libros por autoras.
-7. Buscar libros por género literario.
+The Feminist Library in our neighborhood wants to modernize. The project aims to develop a book management system that allows administrators to:
+
+1. View the list of books.
    
-Todo el proceso (creación, modificación y eliminación de registros) se realiza desde Java,
-mientras que los datos se almacenan y visualizan en una base de datos PostgreSQL.
+2. Add new books.
+  
+3. Edit existing information.
 
-La aplicación se ejecuta desde la terminal, utilizando una arquitectura MVC y el patrón de diseño DAO.
+4. Remove books from the catalog.
 
-💻 Tecnologías
+5. Search for books by title.
 
-Java 21
+6. Search for books by authors.
+   
+7. Search for books by literary genre.
 
-PostgreSQL 17
+The entire process (creation, modification, and deletion of records) is carried out in Java, while the data is stored and displayed in a PostgreSQL database.
+The application runs from the terminal, using an MVC architecture and the DAO design pattern.
 
-Apache Maven 3.13.0
+💻 Technologies:
 
-JUnit 5 para pruebas unitarias
+- Java 21
 
-Dotenv para gestión de variables de entorno
+- PostgreSQL 17
 
-JDBC Driver para conexión con la base de datos
+- Apache Maven 3.13.0
 
-🔧 Herramientas
+- JUnit 5 for unit testing.
 
-Visual Studio Code
+- Dotenv for environment variable management.
 
-Git / GitHub
+- JDBC Driver for connection with the database.
 
-Trello para la gestión de tareas y seguimiento del proyecto
+🔧 Tools:
 
-🛠️ Instalación y Ejecución
+- Visual Studio Code
 
-1️⃣ Clonar el repositorio
+- Git / GitHub
+
+- Trello for task management and project tracking.
+
+🛠️ Installation and Execution:
+
+1️⃣ Clone the repository:
 
 https://github.com/P7-FeministLibrary/P7_FeministLibrary.git
 
-2️⃣ Configurar las variables de entorno
+2️⃣ Set up the environment variables:
 
-Crea un archivo .env en la raíz del proyecto con tus credenciales de base de datos:
+Create a .env file in the root of the project with your database credentials:
 
 DB_HOST=localhost
 
@@ -59,19 +63,19 @@ DB_USER=postgres
 
 DB_PASSWORD=tu_contraseña
 
-3️⃣ Compilar el proyecto
+3️⃣ Compile the project:
 mvn compile
 
-4️⃣ Ejecutar la aplicación
+4️⃣ Run the application:
 mvn exec:java -Dexec.mainClass="com.feministlibrary.App"
 
-🧩 Arquitectura del Proyecto
+🧩 Project Architecture:
 
-El proyecto sigue el patrón MVC (Modelo - Vista - Controlador) junto con el diseño DAO (Data Access Object).
+The project follows the MVC (Model - View - Controller) pattern along with the DAO (Data Access Object) design.
 
-🗃️ Base de Datos
+🗃️ Database:
 
-Se utiliza PostgreSQL como sistema gestor.
+PostgreSQL is used as a management system.
 
 Las tablas principales son:
 
