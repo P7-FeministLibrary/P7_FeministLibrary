@@ -57,11 +57,11 @@ DB_HOST=localhost
 
 DB_PORT=5432
 
-DB_NAME=biblioteca_feminista
+DB_NAME=feminist_library
 
 DB_USER=postgres
 
-DB_PASSWORD=tu_contraseña
+DB_PASSWORD=your_password
 
 3️⃣ Compile the project:
 mvn compile
@@ -73,13 +73,13 @@ mvn exec:java -Dexec.mainClass="com.feministlibrary.App"
 
 The project follows the MVC (Model - View - Controller) pattern along with the DAO (Data Access Object) design.
 
+![Captura de pantalla_10-10-2025_153945_chatgpt com](https://github.com/user-attachments/assets/305fa797-7697-424c-b966-afe9a16a6aba)
+
 🗃️ Database:
 
 PostgreSQL is used as a management system.
 
-Las tablas principales son:
-
-![Captura de pantalla_10-10-2025_153945_chatgpt com](https://github.com/user-attachments/assets/305fa797-7697-424c-b966-afe9a16a6aba)
+The main tables are:
 
 book
 
@@ -93,17 +93,19 @@ book_genre (relación mani to mani)
 
 Relaciones:
 
-Un libro puede tener uno o varios autores.
+A book can have one or several authors.
 
-Un libro puede pertenecer a uno o varios géneros.
+A book can belong to one or several genres.
 
-⚙️ Funcionalidades
+⚙️ Features:
 
-✅ Listar todos los libros
-✅ Agregar un libro nuevo
-✅ Editar información de un libro existente
-✅ Eliminar un libro
-✅ Buscar por título, autor o género literario
+✅ List all the books
+✅ Add a new book
+✅ Edit information of an existing book
+✅ Delete a book
+✅ Buscar un libro por título
+✅ Buscar un libro por autor  
+✅ Buscar un libro por género literario
 ✅ Visualización de datos en consola
 
 
