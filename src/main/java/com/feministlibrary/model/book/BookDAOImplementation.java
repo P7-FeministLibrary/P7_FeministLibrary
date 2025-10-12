@@ -9,7 +9,7 @@ public class BookDAOImplementation implements BookDAOInterface {
 
     private void executeUpdate(String sql, int... params) {
         try (Connection conn = DBManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             for (int i = 0; i < params.length; i++)
                 stmt.setInt(i + 1, params[i]);
             stmt.executeUpdate();
@@ -41,23 +41,28 @@ public class BookDAOImplementation implements BookDAOInterface {
     @Override
     public void insert(Book book) {
         if (book.getTitle() == null || book.getTitle().isEmpty()
-            || book.getDescription() == null || book.getDescription().isEmpty()
-            || book.getIsbn() == null || book.getIsbn().isEmpty()) {
+                || book.getDescription() == null || book.getDescription().isEmpty()
+                || book.getIsbn() == null || book.getIsbn().isEmpty()) {
             System.out.println(Style.styleRed("Cannot add book: all fields must be filled."));
             return;
         }
 
         String sql = "INSERT INTO book (title, description, isbn) VALUES (?, ?, ?)";
         try (Connection conn = DBManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
             stmt.setString(1, book.getTitle());
             stmt.setString(2, book.getDescription());
             stmt.setString(3, book.getIsbn());
             stmt.executeUpdate();
+
             try (ResultSet rs = stmt.getGeneratedKeys()) {
-                if (rs.next())
+                if (rs.next()) {
                     book.setIdBook(rs.getInt(1));
+                    System.out.println(Style.styleGreen("Book added successfully with ID " + book.getIdBook()));
+                }
             }
+
         } catch (SQLException e) {
             System.out.println(Style.styleRed("Error adding book: " + e.getMessage()));
         }
@@ -65,7 +70,25 @@ public class BookDAOImplementation implements BookDAOInterface {
 
     @Override
     public void update(Book book) {
-        executeUpdate("UPDATE book SET title=?, description=?, isbn=? WHERE id=?", book.getIdBook());
+        String sql = "UPDATE book SET title=?, description=?, isbn=? WHERE id=?";
+        try (Connection conn = DBManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, book.getTitle());
+            stmt.setString(2, book.getDescription());
+            stmt.setString(3, book.getIsbn());
+            stmt.setInt(4, book.getIdBook());
+
+            int rows = stmt.executeUpdate();
+            if (rows > 0) {
+                System.out.println(Style.styleGreen("Book updated successfully with ID " + book.getIdBook()));
+            } else {
+                System.out.println(Style.styleYellow("No book updated. Check the ID."));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(Style.styleRed("Error updating book: " + e.getMessage()));
+        }
     }
 
     @Override
@@ -73,17 +96,20 @@ public class BookDAOImplementation implements BookDAOInterface {
         executeUpdate("DELETE FROM book_author WHERE id_book = ?", idBook);
         executeUpdate("DELETE FROM book_genre WHERE id_book = ?", idBook);
         executeUpdate("DELETE FROM book WHERE id=?", idBook);
+        System.out.println(Style.styleGreen("Book deleted successfully with ID " + idBook));
     }
 
     @Override
     public Book getById(int idBook) {
         String sql = "SELECT * FROM book WHERE id=?";
         try (Connection conn = DBManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, idBook);
             ResultSet rs = stmt.executeQuery();
             if (rs.next())
-                return new Book(rs.getInt("id"), rs.getString("title"), rs.getString("description"), rs.getString("isbn"));
+                return new Book(rs.getInt("id"), rs.getString("title"), rs.getString("description"),
+                        rs.getString("isbn"));
         } catch (SQLException e) {
             System.out.println(Style.styleRed("Error: " + e.getMessage()));
         }
@@ -92,7 +118,8 @@ public class BookDAOImplementation implements BookDAOInterface {
 
     private List<Book> search(String sql, String param) {
         try (Connection conn = DBManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, "%" + param + "%");
             return mapBooks(stmt.executeQuery());
         } catch (SQLException e) {
@@ -115,8 +142,9 @@ public class BookDAOImplementation implements BookDAOInterface {
                 ORDER BY b.id;
                 """;
         try (Connection conn = DBManager.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+
             return mapBooks(rs);
         } catch (SQLException e) {
             System.out.println(Style.styleRed("List error: " + e.getMessage()));
@@ -175,22 +203,47 @@ public class BookDAOImplementation implements BookDAOInterface {
 
     @Override
     public void addAuthorToBook(int idBook, int idAuthor) {
-        executeUpdate("INSERT INTO book_author (id_book,id_author) VALUES (?,?)", idBook, idAuthor);
+        String sql = "INSERT INTO book_author (id_book,id_author) VALUES (?,?)";
+        try (Connection conn = DBManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idBook);
+            stmt.setInt(2, idAuthor);
+            stmt.executeUpdate();
+            System.out.println(Style.styleGreen("Author with ID " + idAuthor + " linked to book ID " + idBook));
+
+        } catch (SQLException e) {
+            System.out.println(Style.styleRed("Error linking author to book: " + e.getMessage()));
+        }
     }
 
     @Override
     public void addGenreToBook(int idBook, int idGenre) {
-        executeUpdate("INSERT INTO book_genre (id_book,id_genre) VALUES (?,?)", idBook, idGenre);
+        String sql = "INSERT INTO book_genre (id_book,id_genre) VALUES (?,?)";
+        try (Connection conn = DBManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idBook);
+            stmt.setInt(2, idGenre);
+            stmt.executeUpdate();
+            System.out.println(Style.styleGreen("Genre with ID " + idGenre + " linked to book ID " + idBook));
+
+        } catch (SQLException e) {
+            System.out.println(Style.styleRed("Error linking genre to book: " + e.getMessage()));
+        }
     }
 
     @Override
     public void updateAuthor(int idAuthor, String newFirstName, String newLastName) {
         try (Connection conn = DBManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("UPDATE author SET name=?, last_name=? WHERE id=?")) {
+                PreparedStatement stmt = conn.prepareStatement("UPDATE author SET name=?, last_name=? WHERE id=?")) {
+
             stmt.setString(1, newFirstName);
             stmt.setString(2, newLastName);
             stmt.setInt(3, idAuthor);
             stmt.executeUpdate();
+            System.out.println(Style.styleGreen("Author updated successfully with ID " + idAuthor));
+
         } catch (SQLException e) {
             System.out.println(Style.styleRed("Error updating author: " + e.getMessage()));
         }
@@ -199,10 +252,12 @@ public class BookDAOImplementation implements BookDAOInterface {
     @Override
     public void removeAuthorsFromBook(int idBook) {
         executeUpdate("DELETE FROM book_author WHERE id_book=?", idBook);
+        System.out.println(Style.styleYellow("All authors removed from book ID " + idBook));
     }
 
     @Override
     public void removeGenresFromBook(int idBook) {
         executeUpdate("DELETE FROM book_genre WHERE id_book=?", idBook);
+        System.out.println(Style.styleYellow("All genres removed from book ID " + idBook));
     }
 }
