@@ -81,11 +81,11 @@ PostgreSQL is used as a management system.
 
 The main tables are:
 
-book
+author
 
 <img width="1111" height="392" alt="Captura de pantalla 2025-10-12 131859" src="https://github.com/user-attachments/assets/bbb5aacd-1ca5-42ea-b720-b2d387fbaa37" />
 
-author
+book
 
 <img width="1120" height="446" alt="Captura de pantalla 2025-10-12 132017" src="https://github.com/user-attachments/assets/718a9131-bf0a-44c6-95e6-89eb2ec46976" />
 
@@ -116,20 +116,19 @@ A book can belong to one or several genres.
 ✅ Add a new book
 ✅ Edit information of an existing book
 ✅ Delete a book
-✅ Buscar un libro por título
-✅ Buscar un libro por autor  
-✅ Buscar un libro por género literario
-✅ Visualización de datos en consola
+✅ Search for a book by title
+✅ Search for a book by author
+✅ Search for a book by literary genre
+✅ Data visualization in console
 
+Main menu
 
 <img width="443" height="259" alt="Captura de pantalla 2025-10-10 150833" src="https://github.com/user-attachments/assets/d572970b-665c-4591-816c-5397d43a7ff8" />
+
+Insertion of a book
+
 <img w<img width="943" height="300" alt="Captura de pantalla 2025-10-10 151153" src="https://github.com/user-attachments/assets/bb48fcba-0dd3-4ac2-8638-0b27767e03a4" />
 
-
-
-Menú principal
-
-Inserción de un libro
 
 Búsqueda por autor
 
