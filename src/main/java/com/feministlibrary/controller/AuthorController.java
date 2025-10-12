@@ -1,7 +1,6 @@
 package com.feministlibrary.controller;
 
 import java.util.List;
-
 import com.feministlibrary.Style;
 import com.feministlibrary.model.author.Author;
 import com.feministlibrary.model.author.AuthorDAOInterface;
@@ -24,9 +23,15 @@ public class AuthorController {
     }
 
     public void addAuthor() {
-        String[] parts = view.getAuthorFullName().split(" ", 2);
+        String fullName;
+        do {
+            fullName = view.getAuthorFullName().trim();
+            if (fullName.isEmpty()) view.showMessage(Style.styleRed("Author name cannot be empty."));
+        } while (fullName.isEmpty());
+
+        String[] parts = fullName.split(" ", 2);
         String firstName = parts[0];
-        String lastName = parts.length > 1 ? parts[1] : "";
+        String lastName = parts.length > 1 ? parts[1].trim() : "";
 
         Author author = authorDao.getByName(firstName, lastName);
         if (author == null) {
@@ -38,9 +43,15 @@ public class AuthorController {
     }
 
     public void editAuthor() {
-        String[] parts = view.getAuthorFullName().split(" ", 2);
+        String fullName;
+        do {
+            fullName = view.getAuthorFullName().trim();
+            if (fullName.isEmpty()) view.showMessage(Style.styleRed("Author name cannot be empty."));
+        } while (fullName.isEmpty());
+
+        String[] parts = fullName.split(" ", 2);
         String firstName = parts[0];
-        String lastName = parts.length > 1 ? parts[1] : "";
+        String lastName = parts.length > 1 ? parts[1].trim() : "";
 
         Author author = authorDao.getByName(firstName, lastName);
         if (author == null) {
@@ -48,9 +59,8 @@ public class AuthorController {
             return;
         }
 
-        String[] newParts = view.getAuthorFullName().split(" ", 2);
-        author.setName(newParts[0]);
-        author.setLastName(newParts.length > 1 ? newParts[1] : "");
+        author.setName(firstName);
+        author.setLastName(lastName);
         authorDao.update(author);
         view.showMessage(Style.styleGreen("Author updated successfully!"));
     }

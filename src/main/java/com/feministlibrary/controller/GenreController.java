@@ -1,7 +1,6 @@
 package com.feministlibrary.controller;
 
 import java.util.List;
-
 import com.feministlibrary.Style;
 import com.feministlibrary.model.genre.Genre;
 import com.feministlibrary.model.genre.GenreDAOInterface;
@@ -24,22 +23,40 @@ public class GenreController {
     }
 
     public void addGenre() {
-        String name = view.getGenreName();
+        String name;
+        do {
+            name = view.getGenreName().trim();
+            if (name.isEmpty()) view.showMessage(Style.styleRed("Genre name cannot be empty."));
+        } while (name.isEmpty());
+
         Genre genre = genreDao.getByName(name);
         if (genre == null) {
             genreDao.insert(new Genre(name));
             view.showMessage(Style.styleGreen("Genre added successfully!"));
-        } else view.showMessage(Style.styleRed("Genre already exists."));
+        } else {
+            view.showMessage(Style.styleRed("Genre already exists."));
+        }
     }
 
     public void editGenre() {
-        String name = view.getGenreName();
+        String name;
+        do {
+            name = view.getGenreName().trim();
+            if (name.isEmpty()) view.showMessage(Style.styleRed("Genre name cannot be empty."));
+        } while (name.isEmpty());
+
         Genre genre = genreDao.getByName(name);
         if (genre == null) {
             view.showMessage(Style.styleRed("Genre not found."));
             return;
         }
-        String newName = view.getGenreName();
+
+        String newName;
+        do {
+            newName = view.getGenreName().trim();
+            if (newName.isEmpty()) view.showMessage(Style.styleRed("New genre name cannot be empty."));
+        } while (newName.isEmpty());
+
         genre.setGenre(newName);
         genreDao.update(genre);
         view.showMessage(Style.styleGreen("Genre updated successfully!"));

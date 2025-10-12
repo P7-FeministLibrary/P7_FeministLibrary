@@ -19,7 +19,7 @@ public class App {
             AuthorView authorView = new AuthorView();
             GenreView genreView = new GenreView();
 
-            BookDAOInterface bookDao = new BookDaoImplementation();
+            BookDAOInterface bookDao = new BookDAOImplementation();
             AuthorDAOInterface authorDao = new AuthorDAOImplementation();
             GenreDAOInterface genreDao = new GenreDAOImplementation();
 

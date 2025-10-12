@@ -5,7 +5,7 @@
     import java.sql.*;
     import java.util.*;
 
-    public class BookDaoImplementation implements BookDAOInterface {
+    public class BookDAOImplementation implements BookDAOInterface {
 
         private void executeUpdate(String sql, int... params) {
             try (Connection conn = DBManager.getConnection();
