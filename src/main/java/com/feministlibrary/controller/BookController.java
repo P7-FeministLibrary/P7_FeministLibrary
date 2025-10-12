@@ -56,9 +56,11 @@ public class BookController {
             } while (isbn.isEmpty());
 
             Book book = new Book(title, description, isbn);
-            bookDao.insert(book);
+
             handleAuthors(book);
             handleGenres(book);
+
+            bookDao.insert(book);
             view.showMessage(Style.styleGreen("Book added successfully!\n\n"));
         } catch (BackToMenuException e) {
             view.showMessage(Style.styleYellow("Returning to main menu\n"));
@@ -144,7 +146,7 @@ public class BookController {
 
         for (String fullName : authorsInput.split(",")) {
             fullName = fullName.trim();
-            if (fullName.isEmpty()) continue;
+            if (fullName.isEmpty()) throw new BackToMenuException();
             String[] parts = fullName.split(" ", 2);
             String firstName = parts[0];
             String lastName = parts.length > 1 ? parts[1].trim() : "";
@@ -153,6 +155,7 @@ public class BookController {
                 author = new Author(firstName, lastName);
                 authorDao.insert(author);
             }
+            book.addAuthor(firstName + (lastName.isEmpty() ? "" : " " + lastName));
             bookDao.addAuthorToBook(book.getIdBook(), author.getIdAuthor());
         }
     }
@@ -166,12 +169,13 @@ public class BookController {
 
         for (String genreName : genresInput.split(",")) {
             genreName = genreName.trim();
-            if (genreName.isEmpty()) continue;
+            if (genreName.isEmpty()) throw new BackToMenuException();
             Genre genre = genreDao.getByName(genreName);
             if (genre == null) {
                 genre = new Genre(genreName);
                 genreDao.insert(genre);
             }
+            book.addGenre(genreName);
             bookDao.addGenreToBook(book.getIdBook(), genre.getIdGenre());
         }
     }

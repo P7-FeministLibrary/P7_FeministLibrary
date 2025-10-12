@@ -151,8 +151,10 @@
 
         @Override
         public void addAuthorToBook(int idBook, int idAuthor) { executeUpdate("INSERT INTO book_author (id_book,id_author) VALUES (?,?)", idBook, idAuthor); }
+
         @Override
         public void addGenreToBook(int idBook, int idGenre) { executeUpdate("INSERT INTO book_genre (id_book,id_genre) VALUES (?,?)", idBook, idGenre); }
+
         @Override
         public void updateAuthor(int idAuthor, String newFirstName, String newLastName) {
             try (Connection conn = DBManager.getConnection();
@@ -161,8 +163,10 @@
                 stmt.executeUpdate();
             } catch (SQLException e) { System.out.println(Style.styleRed("Error updating author: "+e.getMessage())); }
         }
+
         @Override
         public void removeAuthorsFromBook(int idBook) { executeUpdate("DELETE FROM book_author WHERE id_book=?", idBook); }
+
         @Override
         public void removeGenresFromBook(int idBook) { executeUpdate("DELETE FROM book_genre WHERE id_book=?", idBook); }
     }
