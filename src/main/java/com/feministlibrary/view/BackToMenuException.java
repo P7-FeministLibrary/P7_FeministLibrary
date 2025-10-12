@@ -4,7 +4,7 @@ import com.feministlibrary.Style;
 
 public class BackToMenuException extends RuntimeException {
     public BackToMenuException() {
-        super(Style.styleBlue("Returning"));
+        super(Style.styleOrange("Returning"));
     }
     
     public BackToMenuException(String message) {

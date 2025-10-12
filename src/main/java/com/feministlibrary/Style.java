@@ -1,61 +1,63 @@
-package com.feministlibrary;
+    package com.feministlibrary;
 
-public final class Style {
-    private static final String RESET = "\u001B[0m";
-    private static final String BOLD = "\u001B[1m";
-    private static final String ITALIC = "\u001B[3m";
-    private static final String WHITEBG = "\u001B[47m\u001B[4m";
-    private static final String RED = "\u001B[38;5;196m";
-    private static final String GREEN = "\u001B[38;5;46m";
-    private static final String YELLOW = "\u001B[33m";
-    private static final String BLUE = "\u001B[38;5;21m";
-    private static final String PINK = "\u001B[38;5;200m";
-    private static final String ORANGE = "\u001B[38;5;208m";
+    public final class Style {
+        private static final String RESET = "\u001B[0m";
+        private static final String BOLD = "\u001B[1m";
+        private static final String ITALIC = "\u001B[3m";
+        private static final String WHITEBG = "\u001B[47m\u001B[4m";
+        private static final String RED = "\u001B[38;5;196m";
+        private static final String GREEN = "\u001B[38;5;46m";
+        private static final String YELLOW = "\u001B[33m";
+        private static final String BLUE = "\u001B[38;5;21m";
+        private static final String PINK = "\u001B[38;5;200m";
+        private static final String ORANGE = "\u001B[38;5;208m";
+        public static final String PURPLE = "\u001B[35;1m";
 
-    private Style() {
-    }
 
-    public static String styleRed(String text) {
-        return RED + text + RESET;
-    }
+        private Style() {
+        }
 
-    public static String styleGreen(String text) {
-        return GREEN + text + RESET;
-    }
+        public static String styleRed(String text) {
+            return RED + text + RESET;
+        }
 
-    public static String styleBlue(String text) {
-        return BLUE + text + RESET;
-    }
+        public static String styleGreen(String text) {
+            return GREEN + text + RESET;
+        }
 
-    public static String styleYellow(String text) {
-        return YELLOW + text + RESET;
-    }
+        public static String styleBlue(String text) {
+            return BLUE + text + RESET;
+        }
 
-    public static String styleBold(String text) {
-        return BOLD + text + RESET;
-    }
+        public static String styleYellow(String text) {
+            return YELLOW + text + RESET;
+        }
 
-    public static String stylePink(String text) {
-        return PINK + text + RESET;
-    }
+        public static String styleBold(String text) {
+            return BOLD + text + RESET;
+        }
 
-    public static String styleOrange(String text) {
-        return ORANGE + text + RESET;
-    }
+        public static String stylePink(String text) {
+            return PINK + text + RESET;
+        }
+
+        public static String styleOrange(String text) {
+            return ORANGE + text + RESET;
+        }
 
     public static String titleStyle(String text) {
-        return WHITEBG + BLUE + BOLD + text + RESET;
+        return WHITEBG + PURPLE + BOLD + text + RESET;
     }
 
-    public static String styleBlueBold(String text) {
-        return BLUE + BOLD + text + RESET;
-    }
- 
-    public static String styleItalic(String text) {
-        return ITALIC + text + RESET;
-    }
-    public static String styleOption(String text){
-        return BOLD + YELLOW + text + RESET;
-    }
+        public static String styleBlueBold(String text) {
+            return BLUE + BOLD + text + RESET;
+        }
+    
+        public static String styleItalic(String text) {
+            return ITALIC + text + RESET;
+        }
+        public static String styleOption(String text){
+            return BOLD + YELLOW + text + RESET;
+        }
 
-}
+    }

@@ -32,95 +32,95 @@ public class BookController {
 
     public void addBook() {
         try {
-        Book book = new Book(
-                view.getInput(Style.styleBlue("Enter book title (0 to go back):\n\n")),
-                view.getInput(Style.styleBlue("Enter book description (0 to go back):\n\n")),
-                view.getInput(Style.styleBlue("Enter ISBN code (0 to go back):\n\n")));
-        bookDao.insert(book);
+            Book book = new Book(
+                    view.getInput(Style.styleBlue("Enter book title (0 to go back):\n")),
+                    view.getInput(Style.styleBlue("Enter book description (0 to go back):\n")),
+                    view.getInput(Style.styleBlue("Enter ISBN code (0 to go back):\n")));
+            bookDao.insert(book);
 
-        handleAuthors(book);
-        handleGenres(book);
-        view.showMessage(Style.styleGreen("Book added successfully!\n\n"));
+            handleAuthors(book);
+            handleGenres(book);
+            view.showMessage(Style.styleGreen("Book added successfully!\n\n"));
         } catch (BackToMenuException e) {
             view.showMessage(Style.styleYellow("Returning to main menu\n"));
         }
     }
-    
+
     public void editBook() {
         try {
-        Book book = selectBookByTitle(Style.styleBlue("Enter book title to edit (0 to go back):\n\n"));
-        if (book == null)
-            return;
+            Book book = selectBookByTitle(Style.styleBlue("Enter book title to edit (0 to go back):\n\n"));
+            if (book == null)
+                return;
 
-        String newTitle = view.getInput(Style.styleOrange("New title (Enter to keep current, 0 to go back): "));
-        if (!newTitle.isEmpty())
-            book.setTitle(newTitle);
+            String newTitle = view.getInput(Style.styleOrange("New title (Enter to keep current, 0 to go back): "));
+            if (!newTitle.isEmpty())
+                book.setTitle(newTitle);
 
-        String newDescription = view.getInput(Style.styleOrange("New description (Enter to keep current, 0 to go back): "));
-        if (!newDescription.isEmpty())
-            book.setDescription(newDescription);
+            String newDescription = view.getInput(Style.styleOrange("New description (Enter to keep current, 0 to go back): "));
+            if (!newDescription.isEmpty())
+                book.setDescription(newDescription);
 
-        String newIsbn = view.getInput(Style.styleOrange("New ISBN (Enter to keep current, 0 to go back): "));
-        if (!newIsbn.isEmpty())
-            book.setIsbn(newIsbn);
+            String newIsbn = view.getInput(Style.styleOrange("New ISBN (Enter to keep current, 0 to go back): "));
+            if (!newIsbn.isEmpty())
+                book.setIsbn(newIsbn);
 
-        view.showMessage("Current authors: " + String.join(", ", book.getAuthors()));
-        String newAuthorsInput = view
-                .getInput(Style.styleOrange("Enter new author(s) (comma separated, Enter to keep current, 0 to go back): "));
-        if (!newAuthorsInput.isEmpty()) {
-            bookDao.removeAuthorsFromBook(book.getIdBook());
-            handleAuthors(book);
+            view.showMessage("Current authors: " + String.join(", ", book.getAuthors()));
+            String newAuthorsInput = view
+                    .getInput(Style.styleBlue("Enter new author(s) (comma separated, Enter to keep current, 0 to go back): "));
+            if (!newAuthorsInput.isEmpty()) {
+                bookDao.removeAuthorsFromBook(book.getIdBook());
+                handleAuthors(book);
+            }
+
+            view.showMessage("Current genres: " + String.join(", ", book.getGenres()));
+            String newGenresInput = view
+                    .getInput(Style.styleBlue("Enter new genres (comma separated, Enter to keep current, 0 to go back): "));
+            if (!newGenresInput.isEmpty()) {
+                bookDao.removeGenresFromBook(book.getIdBook());
+                handleGenres(book);
+            }
+
+            bookDao.update(book);
+            view.showMessage(Style.styleGreen("Book updated successfully!\n\n"));
+
+        } catch (BackToMenuException e) {
+            view.showMessage(Style.styleYellow("Operation cancelled. Returning to main menu.\n"));
         }
-
-        view.showMessage("Current genres: " + String.join(", ", book.getGenres()));
-        String newGenresInput = view
-                .getInput(Style.styleOrange("Enter new genres (comma separated, Enter to keep current, 0 to go back): "));
-        if (!newGenresInput.isEmpty()) {
-            bookDao.removeGenresFromBook(book.getIdBook());
-            handleGenres(book);
-        }
-
-        bookDao.update(book);
-        view.showMessage(Style.styleGreen("Book updated successfully!\n\n"));
-    
-    } catch (BackToMenuException e) {
-        view.showMessage(Style.styleYellow("Operation cancelled. Returning to main menu.\n"));
-    } 
     }
 
     public void deleteBook() {
         try {
-        Book book = selectBookByTitle(Style.styleBlue("Enter title to delete, 0 to go back: "));
-        if (book == null) return;
-        bookDao.delete(book.getIdBook());
-        view.showMessage(Style.styleGreen("Book deleted successfully!\n\n"));
-    } catch (BackToMenuException e) {
-        view.showMessage(Style.styleYellow("Operation cancelled. Returning to main menu.\n"));
-    }
+            Book book = selectBookByTitle(Style.styleBlue("Enter title to delete, 0 to go back: "));
+            if (book == null) return;
+            bookDao.delete(book.getIdBook());
+            view.showMessage(Style.styleGreen("Book deleted successfully!\n\n"));
+        } catch (BackToMenuException e) {
+            view.showMessage(Style.styleYellow("Operation cancelled. Returning to main menu.\n"));
+        }
     }
 
     public void searchByTitle() {
         try {
-        searchAndShow(bookDao::searchByTitle, "Enter title to search, 0 to go back: ");
-    } catch (BackToMenuException e) {
-        view.showMessage(Style.styleYellow("Operation cancelled. Returning to main menu.\n"));
-    }
+            searchAndShow(bookDao::searchByTitle, Style.styleBlue("Enter title to search, 0 to go back: "));
+        } catch (BackToMenuException e) {
+            view.showMessage(Style.styleYellow("Operation cancelled. Returning to main menu.\n"));
+        }
     }
 
     public void searchByAuthor() {
         try {
-        searchAndShow(bookDao::searchByAuthor, "Enter author name to search, 0 to go back: ");
-    } catch (BackToMenuException e) {
-                view.showMessage(Style.styleYellow("Operation cancelled. Returning to main menu.\n"));
-    }
+            searchAndShow(bookDao::searchByAuthor, Style.styleBlue("Enter author name to search, 0 to go back: "));
+        } catch (BackToMenuException e) {
+            view.showMessage(Style.styleYellow("Operation cancelled. Returning to main menu.\n"));
+        }
     }
 
     public void searchByGenre() {
         try {
-        searchAndShow(bookDao::searchByGenre, "Enter genre to search, 0 to go back: ");
-    } catch (BackToMenuException e) {
-                view.showMessage(Style.styleYellow("Operation cancelled. Returning to main menu.\n"));
-    }
+            searchAndShow(bookDao::searchByGenre, Style.styleBlue("Enter genre to search, 0 to go back: "));
+        } catch (BackToMenuException e) {
+            view.showMessage(Style.styleYellow("Operation cancelled. Returning to main menu.\n"));
+        }
     }
 
     private void handleAuthors(Book book) throws BackToMenuException {
@@ -174,10 +174,7 @@ public class BookController {
             return books.get(0);
 
         books.forEach(b -> view.showMessage(b.getIdBook() + " | " + b.getTitle()));
-        int id = Integer.parseInt(view.getInput("Enter the ID of the book (0 to go back): "));
-        //Book book = bookDao.getById(id);
-        //view.showMessage(Style.styleYellow("Invalid selection."));
-        //return book;
+        int id = Integer.parseInt(view.getInput(Style.styleBlue("Enter the ID of the book (0 to go back): ")));
         return bookDao.getById(id);
     }
 
@@ -185,7 +182,7 @@ public class BookController {
         String input = view.getInput(prompt);
         List<Book> books = searchFunc.apply(input);
         if (books.isEmpty())
-            view.showMessage("No results found.");
+            view.showMessage(Style.styleRed("No results found."));
         else
             books.forEach(b -> view.showMessage(b.toString()));
     }

@@ -1,17 +1,18 @@
     package com.feministlibrary.model.book;
 
+    import com.feministlibrary.Style;
     import com.feministlibrary.config.DBManager;
     import java.sql.*;
     import java.util.*;
 
-    public class BookDAOImplementation implements BookDAOInterface {
+    public class BookDaoImplementation implements BookDAOInterface {
 
         private void executeUpdate(String sql, int... params) {
             try (Connection conn = DBManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
                 for (int i = 0; i < params.length; i++) stmt.setInt(i + 1, params[i]);
                 stmt.executeUpdate();
-            } catch (SQLException e) { System.out.println("DB Error: " + e.getMessage()); }
+            } catch (SQLException e) { System.out.println(Style.styleRed("DB Error: " + e.getMessage())); }
         }
 
         private List<Book> mapBooks(ResultSet rs) throws SQLException {
@@ -42,7 +43,7 @@
                 stmt.setString(3, book.getIsbn());
                 stmt.executeUpdate();
                 try (ResultSet rs = stmt.getGeneratedKeys()) { if (rs.next()) book.setIdBook(rs.getInt(1)); }
-            } catch (SQLException e) { System.out.println("Error adding book: " + e.getMessage()); }
+            } catch (SQLException e) { System.out.println(Style.styleRed("Error adding book: " + e.getMessage())); }
         }
 
         @Override
@@ -65,7 +66,7 @@
                 stmt.setInt(1, idBook);
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) return new Book(rs.getInt("id"), rs.getString("title"), rs.getString("description"), rs.getString("isbn"));
-            } catch (SQLException e) { System.out.println("Error: " + e.getMessage()); }
+            } catch (SQLException e) { System.out.println(Style.styleRed("Error: " + e.getMessage())); }
             return null;
         }
 
@@ -74,7 +75,7 @@
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, "%" + param + "%");
                 return mapBooks(stmt.executeQuery());
-            } catch (SQLException e) { System.out.println("Search error: " + e.getMessage()); }
+            } catch (SQLException e) { System.out.println(Style.styleRed("Search error: " + e.getMessage())); }
             return new ArrayList<>();
         }
 
@@ -95,7 +96,7 @@
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
                 return mapBooks(rs);
-            } catch (SQLException e) { System.out.println("List error: " + e.getMessage()); }
+            } catch (SQLException e) { System.out.println(Style.styleRed("List error: " + e.getMessage())); }
             return new ArrayList<>();
         }
 
@@ -158,7 +159,7 @@
                 PreparedStatement stmt = conn.prepareStatement("UPDATE author SET name=?, last_name=? WHERE id=?")) {
                 stmt.setString(1,newFirstName); stmt.setString(2,newLastName); stmt.setInt(3,idAuthor);
                 stmt.executeUpdate();
-            } catch (SQLException e) { System.out.println("Error updating author: "+e.getMessage()); }
+            } catch (SQLException e) { System.out.println(Style.styleRed("Error updating author: "+e.getMessage())); }
         }
         @Override
         public void removeAuthorsFromBook(int idBook) { executeUpdate("DELETE FROM book_author WHERE id_book=?", idBook); }

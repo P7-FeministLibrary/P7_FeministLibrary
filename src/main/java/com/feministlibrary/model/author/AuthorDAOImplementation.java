@@ -1,5 +1,6 @@
     package com.feministlibrary.model.author;
 
+    import com.feministlibrary.Style;
     import com.feministlibrary.config.DBManager;
     import java.sql.*;
     import java.util.ArrayList;
@@ -28,7 +29,7 @@
                     }
                 }
             } catch (SQLException e) {
-                System.out.println("Error adding author: " + e.getMessage());
+                System.out.println(Style.styleRed("Error adding author: " + e.getMessage()));
             }
         }
 
@@ -44,7 +45,7 @@
                 stmt.executeUpdate();
 
             } catch (SQLException e) {
-                System.out.println("Error updating author: " + e.getMessage());
+                System.out.println(Style.styleRed("Error updating author: " + e.getMessage()));
             }
         }
 
@@ -60,7 +61,7 @@
                 }
 
             } catch (SQLException e) {
-                System.out.println("Error fetching author by ID: " + e.getMessage());
+                System.out.println(Style.styleRed("Error fetching author by ID: " + e.getMessage()));
             }
             return null;
         }
@@ -95,7 +96,7 @@
                 }
 
             } catch (SQLException e) {
-                System.out.println("Error searching author: " + e.getMessage());
+                System.out.println(Style.styleRed("Error searching author: " + e.getMessage()));
             }
             return authors;
         }
@@ -113,7 +114,7 @@
                 }
 
             } catch (SQLException e) {
-                System.out.println("Error fetching author: " + e.getMessage());
+                System.out.println(Style.styleRed("Error fetching author: " + e.getMessage()));
             }
             return null;
         }

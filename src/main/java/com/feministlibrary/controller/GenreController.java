@@ -1,6 +1,8 @@
 package com.feministlibrary.controller;
 
 import java.util.List;
+
+import com.feministlibrary.Style;
 import com.feministlibrary.model.genre.Genre;
 import com.feministlibrary.model.genre.GenreDAOInterface;
 import com.feministlibrary.view.GenreView;
@@ -17,7 +19,7 @@ public class GenreController {
 
     public void listGenres() {
         List<Genre> genres = genreDao.getAll();
-        if (genres.isEmpty()) view.showMessage("No genres found.");
+        if (genres.isEmpty()) view.showMessage(Style.styleRed("No genres found."));
         else genres.forEach(g -> view.showMessage(g.toString()));
     }
 
@@ -26,20 +28,20 @@ public class GenreController {
         Genre genre = genreDao.getByName(name);
         if (genre == null) {
             genreDao.insert(new Genre(name));
-            view.showMessage("Genre added successfully!");
-        } else view.showMessage("Genre already exists.");
+            view.showMessage(Style.styleGreen("Genre added successfully!"));
+        } else view.showMessage(Style.styleRed("Genre already exists."));
     }
 
     public void editGenre() {
         String name = view.getGenreName();
         Genre genre = genreDao.getByName(name);
         if (genre == null) {
-            view.showMessage("Genre not found.");
+            view.showMessage(Style.styleRed("Genre not found."));
             return;
         }
         String newName = view.getGenreName();
         genre.setGenre(newName);
         genreDao.update(genre);
-        view.showMessage("Genre updated successfully!");
+        view.showMessage(Style.styleGreen("Genre updated successfully!"));
     }
 }

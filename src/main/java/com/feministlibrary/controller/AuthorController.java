@@ -1,6 +1,8 @@
 package com.feministlibrary.controller;
 
 import java.util.List;
+
+import com.feministlibrary.Style;
 import com.feministlibrary.model.author.Author;
 import com.feministlibrary.model.author.AuthorDAOInterface;
 import com.feministlibrary.view.AuthorView;
@@ -17,7 +19,7 @@ public class AuthorController {
 
     public void listAuthors() {
         List<Author> authors = authorDao.getAll();
-        if (authors.isEmpty()) view.showMessage("No authors found.");
+        if (authors.isEmpty()) view.showMessage(Style.styleRed("No authors found."));
         else authors.forEach(a -> view.showMessage(a.toString()));
     }
 
@@ -29,9 +31,9 @@ public class AuthorController {
         Author author = authorDao.getByName(firstName, lastName);
         if (author == null) {
             authorDao.insert(new Author(firstName, lastName));
-            view.showMessage("Author added successfully!");
+            view.showMessage(Style.styleGreen("Author added successfully!"));
         } else {
-            view.showMessage("Author already exists.");
+            view.showMessage(Style.styleRed("Author already exists."));
         }
     }
 
@@ -42,7 +44,7 @@ public class AuthorController {
 
         Author author = authorDao.getByName(firstName, lastName);
         if (author == null) {
-            view.showMessage("Author not found.");
+            view.showMessage(Style.styleRed("Author not found."));
             return;
         }
 
@@ -50,6 +52,6 @@ public class AuthorController {
         author.setName(newParts[0]);
         author.setLastName(newParts.length > 1 ? newParts[1] : "");
         authorDao.update(author);
-        view.showMessage("Author updated successfully!");
+        view.showMessage(Style.styleGreen("Author updated successfully!"));
     }
 }

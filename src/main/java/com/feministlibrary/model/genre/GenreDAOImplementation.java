@@ -1,5 +1,6 @@
     package com.feministlibrary.model.genre;
 
+    import com.feministlibrary.Style;
     import com.feministlibrary.config.DBManager;
     import java.sql.*;
     import java.util.ArrayList;
@@ -24,7 +25,7 @@
                     if (rs.next()) genre.setIdGenre(rs.getInt(1));
                 }
             } catch (SQLException e) {
-                System.out.println("Error adding genre: " + e.getMessage());
+                System.out.println(Style.styleRed("Error adding genre: " + e.getMessage()));
             }
         }
 
@@ -37,7 +38,7 @@
                 stmt.setInt(2, genre.getIdGenre());
                 stmt.executeUpdate();
             } catch (SQLException e) {
-                System.out.println("Error updating genre: " + e.getMessage());
+                System.out.println(Style.styleRed("Error updating genre: " + e.getMessage()));
             }
         }
 
@@ -51,7 +52,7 @@
                     if (rs.next()) return mapResultSetToGenre(rs);
                 }
             } catch (SQLException e) {
-                System.out.println("Error fetching genre by ID: " + e.getMessage());
+                System.out.println(Style.styleRed("Error fetching genre by ID: " + e.getMessage()));
             }
             return null;
         }
@@ -65,7 +66,7 @@
                 ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) genres.add(mapResultSetToGenre(rs));
             } catch (SQLException e) {
-                System.out.println("Error listing genres: " + e.getMessage());
+                System.out.println(Style.styleRed("Error listing genres: " + e.getMessage()));
             }
             return genres;
         }
@@ -81,7 +82,7 @@
                     while (rs.next()) genres.add(mapResultSetToGenre(rs));
                 }
             } catch (SQLException e) {
-                System.out.println("Error searching genres: " + e.getMessage());
+                System.out.println(Style.styleRed("Error searching genres: " + e.getMessage()));
             }
             return genres;
         }
@@ -96,7 +97,7 @@
                     if (rs.next()) return mapResultSetToGenre(rs);
                 }
             } catch (SQLException e) {
-                System.out.println("Error fetching genre by name: " + e.getMessage());
+                System.out.println(Style.styleRed("Error fetching genre by name: " + e.getMessage()));
             }
             return null;
         }
