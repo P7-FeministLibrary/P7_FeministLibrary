@@ -83,13 +83,26 @@ The main tables are:
 
 book
 
+<img width="1111" height="392" alt="Captura de pantalla 2025-10-12 131859" src="https://github.com/user-attachments/assets/bbb5aacd-1ca5-42ea-b720-b2d387fbaa37" />
+
 author
+
+<img width="1120" height="446" alt="Captura de pantalla 2025-10-12 132017" src="https://github.com/user-attachments/assets/718a9131-bf0a-44c6-95e6-89eb2ec46976" />
+
 
 genre
 
+<img width="1107" height="323" alt="Captura de pantalla 2025-10-12 132342" src="https://github.com/user-attachments/assets/4045fd28-e84f-44ef-ae74-da35f18899db" />
+
+
 book_author (relación mani to mani)
 
+<img width="1114" height="342" alt="Captura de pantalla 2025-10-12 132051" src="https://github.com/user-attachments/assets/d32e7739-182a-43b8-a493-665b37ba0aea" />
+
 book_genre (relación mani to mani)
+
+<img width="1104" height="326" alt="Captura de pantalla 2025-10-12 132247" src="https://github.com/user-attachments/assets/232ebe3d-944e-4c80-a702-02302083592d" />
+
 
 Relaciones:
 
