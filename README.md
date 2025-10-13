@@ -48,9 +48,13 @@ git clone https://github.com/P7-FeministLibrary/P7_FeministLibrary.git
 Create a .env file in the root of the project with your database credentials:
 
 DB_HOST=localhost
+
 DB_PORT=5432
+
 DB_NAME=feminist_library
+
 DB_USER=postgres
+
 DB_PASSWORD=your_password
 
 ### 3️. Compile the project:
