@@ -118,4 +118,4 @@ Each book can have multiple authors and genres (many-to-many relationships).
 
 👩‍💻 Jashaira (Developer) – [GitHub](https://github.com/JMileny89)
 
-👩‍💻 Ana Aguilera (Developer) – [[Github](https://www.linkedin.com/in/ana-aguilera-morales-011b1a238/](https://github.com/AnaAguileraMorales88)
+👩‍💻 Ana Aguilera (Developer) – [GitHub](https://github.com/AnaAguileraMorales88)
