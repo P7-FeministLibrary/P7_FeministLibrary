@@ -67,9 +67,9 @@ mvn exec:java -Dexec.mainClass="com.feministlibrary.App"
 This project includes both **unit** and **integration tests** using:
 
 - **JUnit 5** – for unit testing DAO methods and controllers
--  
+  
 - **Mockito** – for mocking static classes (like DBManager)
--  
+   
 - **H2 in-memory database** – for testing real SQL queries without affecting PostgreSQL  
 
 To run tests:
@@ -99,13 +99,13 @@ src/test
 The database is normalized and consists of the following main tables:
 
 - **book** (id, title, description, isbn)
-- 
+ 
 - **author** (id, name, last_name)
-- 
+ 
 - **genre** (id, genre)
-- 
+ 
 - **book_author** (id_book, id_author)
-- 
+ 
 - **book_genre** (id_book, id_genre)
 
 Each book can have multiple authors and genres (many-to-many relationships).
