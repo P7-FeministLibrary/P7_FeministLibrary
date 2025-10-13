@@ -2,21 +2,7 @@
 
 ## Description
 
-The Feminist Library in our neighborhood wants to modernize. The project aims to develop a book management system that allows administrators to:
-
-1. View the list of books.
-   
-2. Add new books.
-  
-3. Edit existing information.
-
-4. Remove books from the catalog.
-
-5. Search for books by title.
-
-6. Search for books by authors.
-   
-7. Search for books by literary genre.
+Is a console application developed in Java 21 with an MVC architecture and connection to a PostgreSQL database, which will allow the library administrator to perform basic book management operations (CRUD): add, list, update, delete and search for books by title, author or genre.
 
 ## Screenshot
 <img width="826" height="258" alt="Captura de pantalla 2025-10-13 a las 12 04 35" src="https://github.com/user-attachments/assets/12832dec-71e0-49f4-957f-5805773946bc" />
@@ -30,19 +16,13 @@ The Feminist Library in our neighborhood wants to modernize. The project aims to
 
 - Apache Maven 3.13.0
 
-- JUnit 5 for unit testing.
-
-- Dotenv for environment variable management.
-
-- JDBC Driver for connection with the database.
+- Unitat 5 , Mockito
 
 ## Tools:
 
 - Visual Studio Code
 
 - Git / GitHub
-
-- Trello for task management and project tracking.
 
 ## Installation and Execution:
 
@@ -76,10 +56,10 @@ The project includes unit tests developed with JUnit 5 to validate CRUD operatio
 
 ## Team
 
-👩‍💻 Stef – GitHub
+👩‍💻 Estefania Secanell – [github](https://github.com/Abaraira)
 
-👩‍💻 Suraya – GitHub
+👩‍💻 Suraya Mattar – [Linkedin](https://www.linkedin.com/in/suraya-mattar/)
 
-👩‍💻 Jashaira – GitHub
+👩‍💻 Jashaira – [GitHub](https://github.com/JMileny89)
 
-👩‍💻 Ana – GitHub
+👩‍💻 Ana Aguilera – [Linkedin] (https://www.linkedin.com/in/ana-aguilera-morales-011b1a238/)
