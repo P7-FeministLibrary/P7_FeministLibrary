@@ -25,14 +25,7 @@
       <version>5.10.0</version>
       <scope>test</scope>
     </dependency>
-
-   <dependency>
-    <groupId>com.h2database</groupId>
-    <artifactId>h2</artifactId>
-    <version>2.2.224</version>
-    <scope>test</scope>
-  </dependency>
-    
+  
     <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
       <dependency>
         <groupId>org.mockito</groupId>
@@ -48,7 +41,7 @@
         <scope>test</scope>
     </dependency>
 
-        <!-- H2 Database (modo memoria, ideal para tests de integración) -->
+        <!-- H2 Database (modo memoria, para tests de integración) -->
       <dependency>
           <groupId>com.h2database</groupId>
           <artifactId>h2</artifactId>
