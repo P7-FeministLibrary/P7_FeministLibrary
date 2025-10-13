@@ -6,7 +6,7 @@
 - [Screenshots](#screenshots)
 - [Technologies](#tools--technologies)
 - [Installation](#installation-and-execution)
-- [Testing](#tests)
+- [Testing](#testing)
 - [Architecture](#architecture)
 - [Database Model](#database-model)
 - [Team](#team)
@@ -105,7 +105,7 @@ Each book can have multiple authors and genres (many-to-many relationships).
 ## Team
 👩‍💻 Estefania Secanell (Scrum Master & Developer) – [GitHub](https://github.com/Abaraira)
 
-👩‍💻 Suraya Mattar (Product Owener & Developer) – [GitHub](https://github.com/surayac)
+👩‍💻 Suraya Mattar (Product Owner & Developer) – [GitHub](https://github.com/surayac)
 
 👩‍💻 Jashaira (Developer) – [GitHub](https://github.com/JMileny89)
 
