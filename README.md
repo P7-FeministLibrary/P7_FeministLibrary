@@ -114,8 +114,8 @@ Each book can have multiple authors and genres (many-to-many relationships).
 
 👩‍💻 Estefania Secanell (Scrum Master & Developer) – [GitHub](https://github.com/Abaraira)
 
-👩‍💻 Suraya Mattar (Product Owener & Developer) [Linkedin](https://github.com/surayac)
+👩‍💻 Suraya Mattar (Product Owener & Developer) [GitHub](https://github.com/surayac)
 
 👩‍💻 Jashaira (Developer) – [GitHub](https://github.com/JMileny89)
 
-👩‍💻 Ana Aguilera (Developer) – [Linkedin](https://www.linkedin.com/in/ana-aguilera-morales-011b1a238/)
+👩‍💻 Ana Aguilera (Developer) – [[Github](https://www.linkedin.com/in/ana-aguilera-morales-011b1a238/](https://github.com/AnaAguileraMorales88)
