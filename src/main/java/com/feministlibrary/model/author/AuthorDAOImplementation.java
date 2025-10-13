@@ -25,7 +25,7 @@ public class AuthorDAOImplementation implements AuthorDAOInterface {
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
                     author.setIdAuthor(rs.getInt(1));
-                    System.out.println(Style.styleGreen("Author " + author.getName() + " " + author.getLastName() + " with ID " + author.getIdAuthor() + " added successfully"));
+                    System.out.println(Style.styleGreen("Author " + "'" + author.getName() + " " + author.getLastName() + "'" + " with ID " + author.getIdAuthor() + " added successfully"));
                 }
             }
         } catch (SQLException e) {

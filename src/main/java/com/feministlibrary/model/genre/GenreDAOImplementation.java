@@ -26,7 +26,7 @@ public class GenreDAOImplementation implements GenreDAOInterface {
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
                     genre.setIdGenre(rs.getInt(1));
-                    System.out.println(Style.styleGreen("Genre added successfully with ID " + genre.getIdGenre()));
+                    System.out.println(Style.styleGreen("Genre " + "'" + genre.getGenre() + "'" + " with ID " + genre.getIdGenre() + " successfully added."));
                 }
             }
 
