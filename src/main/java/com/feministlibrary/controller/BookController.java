@@ -42,21 +42,28 @@ public class BookController {
             String title, description, isbn;
             do {
                 title = view.getInput(Style.styleBlue("Enter book title (0 to go back): ")).trim();
+                if (title.equals("0")) throw new BackToMenuException();
                 if (title.isEmpty())
                     view.showMessage(Style.styleRed("Title cannot be empty."));
             } while (title.isEmpty());
 
             do {
                 description = view.getInput(Style.styleBlue("Enter book description (0 to go back): ")).trim();
+                if (description.equals("0")) throw new BackToMenuException();
                 if (description.isEmpty())
                     view.showMessage(Style.styleRed("Description cannot be empty."));
             } while (description.isEmpty());
 
             do {
                 isbn = view.getInput(Style.styleBlue("Enter ISBN code (0 to go back): ")).trim();
+                if (isbn.equals("0")) throw new BackToMenuException();
                 if (isbn.isEmpty())
                     view.showMessage(Style.styleRed("ISBN cannot be empty."));
-            } while (isbn.isEmpty());
+                else if (isbn.length() > 20) {
+                    view.showMessage(Style.styleRed("ISBN too long (" + isbn.length() + " chars). Max allowed: 20."));
+                    isbn = ""; 
+                }
+                } while (isbn.isEmpty());
 
             Book book = new Book(title, description, isbn);
 
