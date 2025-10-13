@@ -66,8 +66,10 @@ mvn exec:java -Dexec.mainClass="com.feministlibrary.App"
 ## Testing
 This project includes both **unit** and **integration tests** using:
 
-- **JUnit 5** – for unit testing DAO methods and controllers  
-- **Mockito** – for mocking static classes (like DBManager)  
+- **JUnit 5** – for unit testing DAO methods and controllers
+-  
+- **Mockito** – for mocking static classes (like DBManager)
+-  
 - **H2 in-memory database** – for testing real SQL queries without affecting PostgreSQL  
 
 To run tests:
@@ -78,27 +80,42 @@ mvn test
 ##  Architecture
 The project follows an **MVC (Model-View-Controller)** architecture and uses the **DAO (Data Access Object)** pattern.
 src/main/
+
   ├── config/ # Database connection (DBManager)
+  
   ├── controller/ # Application logic connecting view and model
+  
   ├── model/ # Data models and DAOs (Book, Author, Genre)
+  
   ├── view/ # Console interface for user interaction
+  
   ├── App.java # Main entry point
+  
   └── Style.java
+  
 src/test
 
 ## Database Model
 The database is normalized and consists of the following main tables:
 
 - **book** (id, title, description, isbn)
+- 
 - **author** (id, name, last_name)
+- 
 - **genre** (id, genre)
+- 
 - **book_author** (id_book, id_author)
+- 
 - **book_genre** (id_book, id_genre)
 
 Each book can have multiple authors and genres (many-to-many relationships).
 
 ## Team
+
 👩‍💻 Estefania Secanell (Scrum Master & Developer) – [GitHub](https://github.com/Abaraira)
-👩‍💻 Suraya Mattar (Product Owener & Developer) [GitHub](https://github.com/surayac)
+
+👩‍💻 Suraya Mattar (Product Owener & Developer) [Linkedin](https://github.com/surayac)
+
 👩‍💻 Jashaira (Developer) – [GitHub](https://github.com/JMileny89)
-👩‍💻 Ana Aguilera (Developer) – [GitHub](https://www.linkedin.com/in/ana-aguilera-morales-011b1a238/)
+
+👩‍💻 Ana Aguilera (Developer) – [Linkedin](https://www.linkedin.com/in/ana-aguilera-morales-011b1a238/)
