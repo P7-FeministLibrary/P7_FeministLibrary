@@ -2,6 +2,7 @@ package com.feministlibrary.model.book;
 
 import com.feministlibrary.Style;
 import com.feministlibrary.config.DBManager;
+
 import java.sql.*;
 import java.util.*;
 
@@ -59,7 +60,7 @@ public class BookDAOImplementation implements BookDAOInterface {
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
                     book.setIdBook(rs.getInt(1));
-                    System.out.println(Style.styleGreen("Book added successfully with ID " + book.getIdBook()));
+                    System.out.println(Style.styleGreen("Book " + "'" + book.getTitle() + "'" + " with ID " + book.getIdBook() + " successfully added."));
                 }
             }
 
@@ -81,7 +82,7 @@ public class BookDAOImplementation implements BookDAOInterface {
 
             int rows = stmt.executeUpdate();
             if (rows > 0) {
-                System.out.println(Style.styleGreen("Book updated successfully with ID " + book.getIdBook()));
+                System.out.println(Style.styleGreen("Book " + "'" + book.getTitle() + "'" +  " with ID " + book.getIdBook() + " successfully updated."));
             } else {
                 System.out.println(Style.styleYellow("No book updated. Check the ID."));
             }
@@ -93,10 +94,11 @@ public class BookDAOImplementation implements BookDAOInterface {
 
     @Override
     public void delete(int idBook) {
+        Book book = getById(idBook);
         executeUpdate("DELETE FROM book_author WHERE id_book = ?", idBook);
         executeUpdate("DELETE FROM book_genre WHERE id_book = ?", idBook);
         executeUpdate("DELETE FROM book WHERE id=?", idBook);
-        System.out.println(Style.styleGreen("Book deleted successfully with ID " + idBook));
+        System.out.println(Style.styleGreen("Book " + "'" + book.getTitle() + "'" + " with ID " + idBook + " sucessfully deleted."));
     }
 
     @Override

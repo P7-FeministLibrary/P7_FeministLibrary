@@ -41,19 +41,19 @@ public class BookController {
         try {
             String title, description, isbn;
             do {
-                title = view.getInput(Style.styleBlue("Enter book title (0 to go back):")).trim();
+                title = view.getInput(Style.styleBlue("Enter book title (0 to go back): ")).trim();
                 if (title.isEmpty())
                     view.showMessage(Style.styleRed("Title cannot be empty."));
             } while (title.isEmpty());
 
             do {
-                description = view.getInput(Style.styleBlue("Enter book description (0 to go back):")).trim();
+                description = view.getInput(Style.styleBlue("Enter book description (0 to go back): ")).trim();
                 if (description.isEmpty())
                     view.showMessage(Style.styleRed("Description cannot be empty."));
             } while (description.isEmpty());
 
             do {
-                isbn = view.getInput(Style.styleBlue("Enter ISBN code (0 to go back):")).trim();
+                isbn = view.getInput(Style.styleBlue("Enter ISBN code (0 to go back): ")).trim();
                 if (isbn.isEmpty())
                     view.showMessage(Style.styleRed("ISBN cannot be empty."));
             } while (isbn.isEmpty());
@@ -73,28 +73,29 @@ public class BookController {
 
     public void editBook() {
         try {
-            Book book = selectBookByTitle(Style.styleBlue("Enter book title to edit (0 to go back):"));
+            Book book = selectBookByTitle(Style.styleBlue("Enter book title to edit (0 to go back): "));
             if (book == null)
                 return;
 
-            String newTitle = view.getInput(Style.styleOrange("New title (Enter to keep current, 0 to go back):"))
+            String newTitle = view.getInput(Style.styleOrange("New title (Enter to keep current, 0 to go back): "))
                     .trim();
             if (!newTitle.isEmpty())
                 book.setTitle(newTitle);
 
             String newDescription = view
-                    .getInput(Style.styleOrange("New description (Enter to keep current, 0 to go back):")).trim();
+                    .getInput(Style.styleOrange("New description (Enter to keep current, 0 to go back): ")).trim();
             if (!newDescription.isEmpty())
                 book.setDescription(newDescription);
 
-            String newIsbn = view.getInput(Style.styleOrange("New ISBN (Enter to keep current, 0 to go back):")).trim();
+            String newIsbn = view.getInput(Style.styleOrange("New ISBN (Enter to keep current, 0 to go back): "))
+                    .trim();
             if (!newIsbn.isEmpty())
                 book.setIsbn(newIsbn);
 
             view.showMessage("Current authors: " + String.join(", ", book.getAuthors()));
             String newAuthorsInput = view
                     .getInput(Style
-                            .styleBlue("Enter new author(s) (comma separated, Enter to keep current, 0 to go back):"))
+                            .styleBlue("Enter new author(s) (comma separated, Enter to keep current, 0 to go back): "))
                     .trim();
             if (!newAuthorsInput.isEmpty()) {
                 updateAuthors(book, newAuthorsInput);
@@ -103,7 +104,8 @@ public class BookController {
             view.showMessage("Current genres: " + String.join(", ", book.getGenres()));
             String newGenresInput = view
                     .getInput(
-                            Style.styleBlue("Enter new genres (comma separated, Enter to keep current, 0 to go back):"))
+                            Style.styleBlue(
+                                    "Enter new genres (comma separated, Enter to keep current, 0 to go back): "))
                     .trim();
             if (!newGenresInput.isEmpty()) {
                 updateGenres(book, newGenresInput);
@@ -154,11 +156,10 @@ public class BookController {
 
     public void deleteBook() {
         try {
-            Book book = selectBookByTitle(Style.styleBlue("Enter title to delete, 0 to go back:"));
+            Book book = selectBookByTitle(Style.styleBlue("Enter title to delete, 0 to go back: "));
             if (book == null)
                 return;
             bookDao.delete(book.getIdBook());
-            view.showMessage(Style.styleGreen("Book deleted successfully!\n\n"));
         } catch (BackToMenuException e) {
             view.showMessage(Style.styleYellow("Operation cancelled. Returning to main menu.\n"));
         }
@@ -192,7 +193,7 @@ public class BookController {
     private void handleAuthors(Book book) throws BackToMenuException {
         String authorsInput;
         do {
-            authorsInput = view.getInput(Style.styleBlue("Enter author(s) (comma separated), 0 to go back:")).trim();
+            authorsInput = view.getInput(Style.styleBlue("Enter author(s) (comma separated), 0 to go back: ")).trim();
             if (authorsInput.isEmpty())
                 view.showMessage(Style.styleRed("Authors cannot be empty."));
         } while (authorsInput.isEmpty());
@@ -217,7 +218,7 @@ public class BookController {
     private void handleGenres(Book book) throws BackToMenuException {
         String genresInput;
         do {
-            genresInput = view.getInput(Style.styleBlue("Enter genres (comma separated), 0 to go back:")).trim();
+            genresInput = view.getInput(Style.styleBlue("Enter genres (comma separated), 0 to go back: ")).trim();
             if (genresInput.isEmpty())
                 view.showMessage(Style.styleRed("Genres cannot be empty."));
         } while (genresInput.isEmpty());
@@ -247,7 +248,7 @@ public class BookController {
             return books.get(0);
 
         books.forEach(b -> view.showMessage(b.getIdBook() + " | " + b.getTitle()));
-        int id = Integer.parseInt(view.getInput(Style.styleBlue("Enter the ID of the book (0 to go back):")));
+        int id = Integer.parseInt(view.getInput(Style.styleBlue("Enter the ID of the book (0 to go back): ")));
         return bookDao.getById(id);
     }
 
