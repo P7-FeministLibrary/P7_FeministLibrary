@@ -24,9 +24,8 @@
 - Console Styling — Uses color-coded messages for better user interaction.
 
 ## Screenshots
-<img width="822" height="371" alt="Captura de pantalla 2025-10-13 a las 17 11 39" src="https://github.com/user-attachments/assets/fe904527-a478-41ac-8e37-186f9fa21ca0" />
-<img width="822" height="380" alt="Captura de pantalla 2025-10-13 a las 17 12 08" src="https://github.com/user-attachments/assets/d43df2ff-77db-4575-8b1b-8e4d9fca27e9" />
-<img width="941" height="379" alt="Captura de pantalla 2025-10-13 a las 12 04 10" src="https://github.com/user-attachments/assets/e090f727-4c03-4067-84f9-d1a75472fbd7" />
+<img width="450" height="150" alt="Captura de pantalla 2025-10-13 a las 12 04 35" src="https://github.com/user-attachments/assets/12832dec-71e0-49f4-957f-5805773946bc" />
+<img width="450" height="150" alt="Captura de pantalla 2025-10-13 a las 12 04 10" src="https://github.com/user-attachments/assets/ba87fed2-1b60-4794-a10a-4af764b0f6f7" />
 
 ## Tools & Technologies:
 - Visual Studio Code
@@ -66,10 +65,8 @@ mvn exec:java -Dexec.mainClass="com.feministlibrary.App"
 ## Testing
 This project includes both **unit** and **integration tests** using:
 
-- **JUnit 5** – for unit testing DAO methods and controllers
-  
-- **Mockito** – for mocking static classes (like DBManager)
-   
+- **JUnit 5** – for unit testing DAO methods and controllers  
+- **Mockito** – for mocking static classes (like DBManager)  
 - **H2 in-memory database** – for testing real SQL queries without affecting PostgreSQL  
 
 To run tests:
@@ -79,42 +76,32 @@ mvn test
 
 ##  Architecture
 The project follows an **MVC (Model-View-Controller)** architecture and uses the **DAO (Data Access Object)** pattern.
-src/main/
-
-  ├── config/ # Database connection (DBManager)
-  
-  ├── controller/ # Application logic connecting view and model
-  
-  ├── model/ # Data models and DAOs (Book, Author, Genre)
-  
-  ├── view/ # Console interface for user interaction
-  
-  ├── App.java # Main entry point
-  
-  └── Style.java
-  
-src/test
+```
+  src/  
+ ├── config/  
+ ├── model/  
+ │   ├── author/ 
+ │   ├── book/
+ │   └── genre/ 
+ ├── view/    
+ └── controller/
+```
 
 ## Database Model
 The database is normalized and consists of the following main tables:
 
 - **book** (id, title, description, isbn)
- 
 - **author** (id, name, last_name)
- 
 - **genre** (id, genre)
- 
 - **book_author** (id_book, id_author)
- 
 - **book_genre** (id_book, id_genre)
 
 Each book can have multiple authors and genres (many-to-many relationships).
 
 ## Team
-
 👩‍💻 Estefania Secanell (Scrum Master & Developer) – [GitHub](https://github.com/Abaraira)
 
-👩‍💻 Suraya Mattar (Product Owener & Developer) [GitHub](https://github.com/surayac)
+👩‍💻 Suraya Mattar (Product Owener & Developer) – [GitHub](https://github.com/surayac)
 
 👩‍💻 Jashaira (Developer) – [GitHub](https://github.com/JMileny89)
 
