@@ -17,7 +17,6 @@ import static org.mockito.Mockito.mockStatic;
 class AuthorDAOIntegrationTest {
 
     private static AuthorDAOImplementation authorDAO;
-    private static JdbcDataSource ds;
     private static MockedStatic<DBManager> dbManagerMock;
 
     @BeforeAll
