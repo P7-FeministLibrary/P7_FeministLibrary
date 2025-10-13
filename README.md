@@ -130,23 +130,18 @@ Insertion of a book
 <img w<img width="943" height="300" alt="Captura de pantalla 2025-10-10 151153" src="https://github.com/user-attachments/assets/bb48fcba-0dd3-4ac2-8638-0b27767e03a4" />
 
 
-Búsqueda por autor
+🧠 Example of Use
 
-Listado general
-
-🧠 Ejemplo de Uso
-
-1️⃣ Al ejecutar la aplicación, se mostrará un menú en la terminal.
-2️⃣ El usuario podrá elegir una opción (ver, agregar, editar o eliminar libros).
-3️⃣ Los datos se enviarán a la base de datos PostgreSQL mediante JDBC.
-4️⃣ La salida mostrará mensajes de confirmación o error según la acción realizada.
+1️⃣ When running the application, a menu will be displayed in the terminal.
+2️⃣ The user will be able to choose an option (view, add, edit, or delete books).
+3️⃣ The data will be sent to the PostgreSQL database via JDBC.
+4️⃣ The output will display confirmation or error messages depending on the action performed.
 
 🧪 Tests
 
-El proyecto incluye pruebas unitarias desarrolladas con JUnit 5,
-para validar las operaciones CRUD y la conexión a la base de datos.
+The project includes unit tests developed with JUnit 5 to validate CRUD operations and the database connection.
 
-🤝 Equipo
+🤝 Team
 
 👩‍💻 Stef – GitHub
 
