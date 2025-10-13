@@ -1,10 +1,29 @@
 package com.feministlibrary.config;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
+import io.github.cdimascio.dotenv.Dotenv;
+import java.sql.SQLException;
+
 
 public class DBManager {
-    private static final String URL = "jdbc:postgresql://localhost:5423/feministlibrary";
-   	private static final String USER = "postgres";
-	private static final String PASS = "12345";
-	private static Connection connection;
+
+    private static final Dotenv dotenv = Dotenv.load();
+
+    private static final String URL = "jdbc:postgresql://"
+            + dotenv.get("DB_HOST") + ":"
+            + dotenv.get("DB_PORT") + "/"
+            + dotenv.get("DB_NAME");
+    private static final String USER = dotenv.get("DB_USER");
+    private static final String PASSWORD = dotenv.get("DB_PASSWORD");
+
+    private DBManager () {}
+
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(URL, USER, PASSWORD);
+    }
+
 }
+
+
+

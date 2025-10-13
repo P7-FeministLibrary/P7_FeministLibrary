@@ -1,20 +1,12 @@
-package com.feministlibrary;
+    package com.feministlibrary;
 
-import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-{
     /**
-     * Rigorous Test :-)
+     * Unit test for simple App.
      */
-    @Test
-    public void shouldAnswerWithTrue()
+    public class AppTest 
     {
-        assertTrue( true );
+    
+        
     }
-}
