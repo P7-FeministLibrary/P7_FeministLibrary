@@ -24,8 +24,9 @@
 - Console Styling — Uses color-coded messages for better user interaction.
 
 ## Screenshots
-<img width="450" height="150" alt="Captura de pantalla 2025-10-13 a las 12 04 35" src="https://github.com/user-attachments/assets/12832dec-71e0-49f4-957f-5805773946bc" />
-<img width="450" height="150" alt="Captura de pantalla 2025-10-13 a las 12 04 10" src="https://github.com/user-attachments/assets/ba87fed2-1b60-4794-a10a-4af764b0f6f7" />
+<img width="822" height="371" alt="Captura de pantalla 2025-10-13 a las 17 11 39" src="https://github.com/user-attachments/assets/fe904527-a478-41ac-8e37-186f9fa21ca0" />
+<img width="822" height="380" alt="Captura de pantalla 2025-10-13 a las 17 12 08" src="https://github.com/user-attachments/assets/d43df2ff-77db-4575-8b1b-8e4d9fca27e9" />
+<img width="941" height="379" alt="Captura de pantalla 2025-10-13 a las 12 04 10" src="https://github.com/user-attachments/assets/e090f727-4c03-4067-84f9-d1a75472fbd7" />
 
 ## Tools & Technologies:
 - Visual Studio Code
