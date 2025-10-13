@@ -62,4 +62,4 @@ The project includes unit tests developed with JUnit 5 to validate CRUD operatio
 
 👩‍💻 Jashaira – [GitHub](https://github.com/JMileny89)
 
-👩‍💻 Ana Aguilera – [Linkedin]([https://www.linkedin.com/in/ana-aguilera-morales-011b1a238/](https://www.linkedin.com/in/ana-aguilera-morales-011b1a238/))
+👩‍💻 Ana Aguilera – [Linkedin](https://www.linkedin.com/in/ana-aguilera-morales-011b1a238/)
